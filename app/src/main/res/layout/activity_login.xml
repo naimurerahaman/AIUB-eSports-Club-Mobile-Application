@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="28dp">
+
+        <!-- App Logo / Icon -->
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:text="⚡"
+            android:textSize="44sp"
+            android:gravity="center"
+            android:background="@color/accent_blue"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AIUB eSports Club"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign in to your account"
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="36dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Email Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/etLoginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter your email"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="18dp"/>
+
+        <!-- Password Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/etLoginPassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter your password"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textPassword"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Login"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="14dp"/>
+
+        <!-- Go to Signup -->
+        <TextView
+            android:id="@+id/tvGoToSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign Up"
+            android:textSize="13sp"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Small link to Admin Login -->
+        <TextView
+            android:id="@+id/tvAdminLoginLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin? Login here"
+            android:textSize="12sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Loading indicator — hidden by default -->
+        <ProgressBar
+            android:id="@+id/progressBarLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

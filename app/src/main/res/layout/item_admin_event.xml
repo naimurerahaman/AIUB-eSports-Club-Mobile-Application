@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/card_bg"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp">
+
+    <!-- Event Name -->
+    <TextView
+        android:id="@+id/tvAdminEventName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Game and Date -->
+    <TextView
+        android:id="@+id/tvAdminEventDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Game | Date"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Buttons Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <!-- Edit Button -->
+        <Button
+            android:id="@+id/btnEditEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="✏️ Edit"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Delete Button -->
+        <Button
+            android:id="@+id/btnDeleteEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="🗑️ Delete"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#C0392B"/>
+
+    </LinearLayout>
+</LinearLayout>

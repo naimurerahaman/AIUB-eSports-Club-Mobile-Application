@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/btnBackEditPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="← Back"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Screen Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✏️ Edit Player"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Subtitle hint -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fields are pre-filled with current data. Change what you need."
+            android:textSize="12sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- ===== PLAYER NAME ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Player Full Name"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEditPlayerName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/white"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== GAME SPECIALTY ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Game Specialty"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEditPlayerGame"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/white"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== RANK ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rank"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEditPlayerRank"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/white"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== ROLE ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Role in Team"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEditPlayerRole"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/white"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- ===== UPDATE BUTTON ===== -->
+        <Button
+            android:id="@+id/btnUpdatePlayer"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="✅  Update Player"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"/>
+
+    </LinearLayout>
+</ScrollView>

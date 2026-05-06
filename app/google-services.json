@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "716220309003",
+    "project_id": "aiub-esports-club-3780f",
+    "storage_bucket": "aiub-esports-club-3780f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716220309003:android:9cf01f700f0a42b63b310e",
+        "android_client_info": {
+          "package_name": "com.aiub.esportsclub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4bgkmNN2AmfbJ6aJJ2fDQsCi95SHrnHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_bg">
+
+    <!-- ===== TOP HEADER BAR ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/card_bg"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/btnBackManagePlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="← Back"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Screen Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚙️ Manage Players"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <!-- Loading spinner — visible while data is loading from Firebase -->
+    <ProgressBar
+        android:id="@+id/progressManagePlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:visibility="visible"/>
+
+    <!-- Message shown when there are no players yet -->
+    <TextView
+        android:id="@+id/tvNoPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No players found.\nAdd some players first!"
+        android:textSize="15sp"
+        android:textColor="@color/light_gray"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"/>
+
+    <!-- RecyclerView shows the list of players -->
+    <!-- visibility="gone" means hidden — we show it after data loads -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAdminPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:visibility="gone"/>
+
+</LinearLayout>

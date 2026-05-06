@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="28dp">
+
+        <!-- Admin Shield Icon -->
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="🛡️"
+            android:textSize="52sp"
+            android:gravity="center"
+            android:background="@color/card_bg"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Panel"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AIUB eSports Club Management"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Warning badge -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚠️ Authorized Personnel Only"
+            android:textSize="12sp"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Email Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Email"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/etAdminEmail"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter admin email"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Password Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Password"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/etAdminPassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter admin password"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textPassword"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnAdminLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="🔐  Admin Login"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Back to user login -->
+        <TextView
+            android:id="@+id/tvBackToUserLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Back to User Login"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"/>
+
+    </LinearLayout>
+</ScrollView>
