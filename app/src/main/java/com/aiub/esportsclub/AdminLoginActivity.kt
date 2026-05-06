@@ -60,7 +60,7 @@ class AdminLoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Welcome, Admin! 🛡️", Toast.LENGTH_SHORT).show()
 
                 // Open the Admin Dashboard
-                val intent = Intent(this, AdminDashboardActivity::class.java)
+                val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent)
                 finish() // Close the login screen so Back button can't return here
 

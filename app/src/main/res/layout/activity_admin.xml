@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- FrameLayout is the container/box that holds our fragments -->
-<!-- Think of it like an empty picture frame — we swap the picture (fragment) inside it -->
+<!-- Same idea as activity_main.xml — just an empty container for admin fragments -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragmentContainer"
+    android:id="@+id/adminFragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_bg"/>

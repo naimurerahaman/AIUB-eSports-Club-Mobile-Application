@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ScrollView lets the screen scroll if content is too long -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <!-- LinearLayout stacks all items vertically, one below the other -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- ===== TOP LOGO AREA ===== -->
+
+        <!-- This displays your custom logo image -->
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/esports_logo"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="AIUB eSports Club Logo"/>
+
+        <!-- Main title of the app -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AIUB eSports Club"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Subtitle below the title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compete. Connect. Conquer."
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"
+            android:gravity="center"
+            android:layout_marginBottom="40dp"/>
+
+        <!-- ===== DIVIDER LINE ===== -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="40dp"/>
+
+        <!-- ===== WELCOME TEXT ===== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome, Gamer! 👾"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your gateway to AIUB gaming tournaments,\nregistrations and our top players."
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:gravity="center"
+            android:layout_marginBottom="40dp"/>
+
+        <!-- ===== NAVIGATION BUTTONS ===== -->
+
+        <!-- Events Button -->
+        <Button
+            android:id="@+id/btnEvents"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="📅  View Events"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="📝  Register Now"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Players Button -->
+        <Button
+            android:id="@+id/btnPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="👥  Our Players"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/card_bg"
+            android:layout_marginBottom="40dp"/>
+        <!-- Logout Button -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🚪  Logout"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#333333"
+            android:layout_marginBottom="16dp"/>
+        <!-- View All Registrations Button -->
+        <Button
+            android:id="@+id/btnViewRegistrations"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="📋  View All Registrations"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#2C3E50"
+            android:layout_marginBottom="12dp"/>
+        <!-- Footer text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AIUB eSports Club © 2025"
+            android:textSize="11sp"
+            android:textColor="@color/light_gray"/>
+
+    </LinearLayout>
+</ScrollView>

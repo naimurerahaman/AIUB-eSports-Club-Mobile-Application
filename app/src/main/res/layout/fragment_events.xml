@@ -38,12 +38,23 @@
     </LinearLayout>
 
     <!-- ===== LIST OF EVENTS ===== -->
-    <!-- RecyclerView is a smart scrollable list — it only loads what's visible -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewEvents"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:clipToPadding="false"/>
+        android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEvents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
+
+    </FrameLayout>
 </LinearLayout>
