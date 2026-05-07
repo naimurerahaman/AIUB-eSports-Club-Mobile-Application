@@ -108,6 +108,16 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/card_bg"
             android:layout_marginBottom="40dp"/>
+        <!-- Profile Button -->
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="👤  My Profile"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#2C3E50"
+            android:layout_marginBottom="12dp"/>
         <!-- Logout Button -->
         <Button
             android:id="@+id/btnLogout"

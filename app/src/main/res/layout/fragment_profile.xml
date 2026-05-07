@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ScrollView lets the whole screen scroll if content is too long -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- ===== HEADER ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <!-- Back Button -->
+            <Button
+                android:id="@+id/btnBackProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="← Back"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/accent"
+                android:layout_marginEnd="16dp"/>
+
+            <!-- Screen Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👤 My Profile"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <!-- ===== AVATAR CIRCLE ===== -->
+        <TextView
+            android:id="@+id/tvProfileAvatar"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:text="?"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@color/accent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Email display (read-only — from Firebase Auth) -->
+        <TextView
+            android:id="@+id/tvProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading email..."
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- ===== FULL NAME ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter your full name"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== DEPARTMENT ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Department"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etProfileDepartment"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="e.g. CSE, EEE, BBA"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== AGE ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etProfileAge"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter your age"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== SEMESTER ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Semester"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etProfileSemester"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="e.g. Spring 2025"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- ===== GAMES SECTION ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🎮  Games I Play"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Game checkboxes inside a card background -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/card_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <!-- CheckBox for Valorant -->
+            <!-- A CheckBox is a small box the user can tick or untick -->
+            <CheckBox
+                android:id="@+id/cbValorant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎯  Valorant"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:buttonTint="@color/accent"
+                android:layout_marginBottom="8dp"/>
+
+            <CheckBox
+                android:id="@+id/cbPUBG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔫  PUBG Mobile"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:buttonTint="@color/accent"
+                android:layout_marginBottom="8dp"/>
+
+            <CheckBox
+                android:id="@+id/cbFIFA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚽  FIFA"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:buttonTint="@color/accent"
+                android:layout_marginBottom="8dp"/>
+
+            <CheckBox
+                android:id="@+id/cbFreeFire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔥  Free Fire"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:buttonTint="@color/accent"
+                android:layout_marginBottom="8dp"/>
+
+            <CheckBox
+                android:id="@+id/cbCS2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="💣  CS2"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:buttonTint="@color/accent"/>
+
+        </LinearLayout>
+
+        <!-- ===== SAVE BUTTON ===== -->
+        <!-- Shown when no profile exists yet -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="💾  Save Profile"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ===== UPDATE BUTTON ===== -->
+        <!-- Shown when a profile already exists -->
+        <Button
+            android:id="@+id/btnUpdateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="✅  Update Profile"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"/>
+
+        <!-- Loading spinner -->
+        <ProgressBar
+            android:id="@+id/progressBarProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

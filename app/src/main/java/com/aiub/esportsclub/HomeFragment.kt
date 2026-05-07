@@ -64,6 +64,14 @@ class HomeFragment : Fragment() {
             (requireActivity() as MainActivity).loadFragment(RegistrationsListFragment())
         }
 
+        // Find the profile button
+        val btnProfile = view.findViewById<Button>(R.id.btnProfile)
+
+        // When tapped, open ProfileFragment
+        btnProfile.setOnClickListener {
+            (requireActivity() as MainActivity).loadFragment(ProfileFragment())
+        }
+
         // ===== LOGOUT =====
         btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
