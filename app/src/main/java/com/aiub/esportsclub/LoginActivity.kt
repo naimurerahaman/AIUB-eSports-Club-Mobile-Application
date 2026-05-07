@@ -89,6 +89,16 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+
+        // Find the Forgot Password text
+        val tvForgotPassword = findViewById<TextView>(R.id.tvForgotPassword)
+
+        // When tapped, open the ForgotPasswordActivity
+        tvForgotPassword.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         // Find the admin login link
         val tvAdminLink = findViewById<TextView>(R.id.tvAdminLoginLink)
 

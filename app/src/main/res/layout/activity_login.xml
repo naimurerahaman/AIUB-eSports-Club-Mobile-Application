@@ -103,6 +103,19 @@
             android:backgroundTint="@color/accent"
             android:layout_marginBottom="14dp"/>
 
+        <!-- Forgot Password link — looks like a clickable text, not a button -->
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textSize="13sp"
+            android:textColor="@color/accent"
+            android:layout_gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="8dp"/>
+
         <!-- Go to Signup -->
         <TextView
             android:id="@+id/tvGoToSignup"
