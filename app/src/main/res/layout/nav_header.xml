@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is the top section of the sidebar -->
+<!-- It shows the app logo, user name, and email -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:padding="20dp"
+    android:background="@color/accent_blue">
+
+    <!-- App logo emoji / avatar -->
+    <TextView
+        android:id="@+id/tvNavAvatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:text="⚡"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:background="@color/accent"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- User Name -->
+    <!-- This will be filled dynamically from Firebase -->
+    <TextView
+        android:id="@+id/tvNavUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AIUB Gamer"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- User Email -->
+    <TextView
+        android:id="@+id/tvNavUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user@aiub.edu"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"/>
+
+</LinearLayout>

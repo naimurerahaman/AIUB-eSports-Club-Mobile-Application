@@ -1,150 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- ScrollView lets the screen scroll if content is too long -->
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/dark_bg">
 
-    <!-- LinearLayout stacks all items vertically, one below the other -->
+    <!-- ===== TOP BANNER SECTION ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="24dp">
+        android:background="@color/card_bg"
+        android:padding="20dp">
 
-        <!-- ===== TOP LOGO AREA ===== -->
-
-        <!-- This displays your custom logo image -->
+        <!-- Club Logo -->
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/esports_logo"
             android:scaleType="fitCenter"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp"
-            android:contentDescription="AIUB eSports Club Logo"/>
+            android:layout_marginBottom="8dp"
+            android:contentDescription="Club Logo"/>
 
-        <!-- Main title of the app -->
+        <!-- Club Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AIUB eSports Club"
-            android:textSize="26sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="4dp"/>
 
-        <!-- Subtitle below the title -->
+        <!-- Welcome message — will be updated dynamically -->
         <TextView
+            android:id="@+id/tvWelcomeMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compete. Connect. Conquer."
-            android:textSize="14sp"
-            android:textColor="@color/light_gray"
-            android:gravity="center"
-            android:layout_marginBottom="40dp"/>
-
-        <!-- ===== DIVIDER LINE ===== -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/accent"
-            android:layout_marginBottom="40dp"/>
-
-        <!-- ===== WELCOME TEXT ===== -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome, Gamer! 👾"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your gateway to AIUB gaming tournaments,\nregistrations and our top players."
+            android:text="Welcome back, Gamer! 👾"
             android:textSize="13sp"
-            android:textColor="@color/light_gray"
-            android:gravity="center"
-            android:layout_marginBottom="40dp"/>
-
-        <!-- ===== NAVIGATION BUTTONS ===== -->
-
-        <!-- Events Button -->
-        <Button
-            android:id="@+id/btnEvents"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="📅  View Events"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/accent"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="📝  Register Now"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/accent_blue"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Players Button -->
-        <Button
-            android:id="@+id/btnPlayers"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="👥  Our Players"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/card_bg"
-            android:layout_marginBottom="40dp"/>
-        <!-- Profile Button -->
-        <Button
-            android:id="@+id/btnProfile"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="👤  My Profile"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:backgroundTint="#2C3E50"
-            android:layout_marginBottom="12dp"/>
-        <!-- Logout Button -->
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="🚪  Logout"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:backgroundTint="#333333"
-            android:layout_marginBottom="16dp"/>
-        <!-- View All Registrations Button -->
-        <Button
-            android:id="@+id/btnViewRegistrations"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="📋  View All Registrations"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:backgroundTint="#2C3E50"
-            android:layout_marginBottom="12dp"/>
-        <!-- Footer text -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AIUB eSports Club © 2025"
-            android:textSize="11sp"
             android:textColor="@color/light_gray"/>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- ===== LATEST UPDATES TITLE ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp">
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="20dp"
+            android:background="@color/accent"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latest Updates"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <!-- ===== LOADING SPINNER ===== -->
+    <!-- Shows while Firebase is fetching posts -->
+    <ProgressBar
+        android:id="@+id/progressBarFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"/>
+
+    <!-- ===== EMPTY STATE MESSAGE ===== -->
+    <!-- Shows when there are no posts yet -->
+    <LinearLayout
+        android:id="@+id/layoutEmptyFeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="40dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📭"
+            android:textSize="48sp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No updates yet"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check back soon for club announcements!"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <!-- ===== UPDATES FEED (RecyclerView) ===== -->
+    <!-- This is the scrollable list that shows all posts -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:visibility="gone"/>
+
+</LinearLayout>

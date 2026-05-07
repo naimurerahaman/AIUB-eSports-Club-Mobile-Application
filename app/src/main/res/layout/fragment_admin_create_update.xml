@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/btnBackCreateUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="← Back"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📢 Create New Update"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Title"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etUpdateTitle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="e.g. PUBG Tournament Registration Open!"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etUpdateDescription"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:hint="Write the full announcement here..."
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Image URL (Optional) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Image URL (Optional)"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etUpdateImageUrl"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="https://example.com/image.jpg"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textUri"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Post Button -->
+        <Button
+            android:id="@+id/btnPostUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="📢  Post Update"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"/>
+
+        <!-- Loading -->
+        <ProgressBar
+            android:id="@+id/progressBarCreateUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

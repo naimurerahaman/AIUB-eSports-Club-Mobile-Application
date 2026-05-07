@@ -1,87 +1,121 @@
 package com.aiub.esportsclub
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
-// A Fragment extends Fragment class (not AppCompatActivity like before)
 class HomeFragment : Fragment() {
 
-    // ===== onCreateView =====
-    // This is like onCreate() in an Activity
-    // But instead of setContentView(), we INFLATE the layout and RETURN it
-    // "inflate" means: build the layout from XML and return it as a View object
+    private lateinit var db  : FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate our fragment layout and return it
-        // This tells Android: "use fragment_home.xml as this fragment's design"
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    // ===== onViewCreated =====
-    // This runs AFTER onCreateView — the layout is ready
-    // We find views and set click listeners here
-    // "view" parameter is the inflated layout returned by onCreateView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Find buttons using view.findViewById (not just findViewById like in Activity)
-        val btnEvents             = view.findViewById<Button>(R.id.btnEvents)
-        val btnRegister           = view.findViewById<Button>(R.id.btnRegister)
-        val btnPlayers            = view.findViewById<Button>(R.id.btnPlayers)
-        val btnViewRegistrations  = view.findViewById<Button>(R.id.btnViewRegistrations)
-        val btnLogout             = view.findViewById<Button>(R.id.btnLogout)
+        db   = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
-        // ===== NAVIGATE TO EVENTS FRAGMENT =====
-        btnEvents.setOnClickListener {
-            // Instead of Intent, we call loadFragment() on the host Activity
-            // requireActivity() gives us the Activity this fragment is inside (MainActivity)
-            // We cast it to MainActivity so we can call our custom loadFragment() function
-            (requireActivity() as MainActivity).loadFragment(EventsFragment())
+        // Find all views
+        val tvWelcome     = view.findViewById<TextView>(R.id.tvWelcomeMessage)
+        val progressBar   = view.findViewById<ProgressBar>(R.id.progressBarFeed)
+        val recyclerView  = view.findViewById<RecyclerView>(R.id.recyclerViewFeed)
+        val layoutEmpty   = view.findViewById<LinearLayout>(R.id.layoutEmptyFeed)
+
+        // ===== SHOW PERSONALISED WELCOME MESSAGE =====
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val email      = currentUser.email ?: ""
+            val name       = currentUser.displayName
+            val displayName = if (!name.isNullOrEmpty()) name
+            else email.substringBefore("@")
+            tvWelcome.text = "Welcome back, $displayName! 👾"
         }
 
-        // ===== NAVIGATE TO REGISTRATION FRAGMENT =====
-        btnRegister.setOnClickListener {
-            (requireActivity() as MainActivity).loadFragment(RegistrationFragment())
-        }
+        // ===== SET UP RECYCLERVIEW =====
+        // LinearLayoutManager arranges cards in a vertical list
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // ===== NAVIGATE TO PLAYERS FRAGMENT =====
-        btnPlayers.setOnClickListener {
-            (requireActivity() as MainActivity).loadFragment(PlayersFragment())
-        }
+        // ===== LOAD UPDATES FROM FIREBASE =====
+        loadUpdates(progressBar, recyclerView, layoutEmpty)
+    }
 
-        // ===== NAVIGATE TO REGISTRATIONS LIST =====
-        btnViewRegistrations.setOnClickListener {
-            (requireActivity() as MainActivity).loadFragment(RegistrationsListFragment())
-        }
+    // ===== LOAD UPDATES FUNCTION =====
+    private fun loadUpdates(
+        progressBar : ProgressBar,
+        recyclerView: RecyclerView,
+        layoutEmpty : LinearLayout
+    ) {
+        // Show spinner while loading
+        progressBar.visibility = View.VISIBLE
 
-        // Find the profile button
-        val btnProfile = view.findViewById<Button>(R.id.btnProfile)
+        // ===== FETCH FROM FIRESTORE =====
+        // db.collection("updates")     → go to the "updates" collection
+        // .orderBy("timestamp", DESCENDING) → show newest posts FIRST
+        // .get()                        → fetch all documents
+        db.collection("updates")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
 
-        // When tapped, open ProfileFragment
-        btnProfile.setOnClickListener {
-            (requireActivity() as MainActivity).loadFragment(ProfileFragment())
-        }
+                // Hide spinner
+                progressBar.visibility = View.GONE
 
-        // ===== LOGOUT =====
-        btnLogout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "Logged out", Toast.LENGTH_SHORT).show()
+                // Check if there are no posts
+                if (querySnapshot.isEmpty) {
+                    layoutEmpty.visibility  = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    return@addOnSuccessListener
+                }
 
-            // After logout, go back to LoginActivity (still an Activity)
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            requireActivity().finish()
-        }
+                // ===== CONVERT DOCUMENTS TO UPDATE OBJECTS =====
+                val updateList = mutableListOf<Update>()
+
+                for (document in querySnapshot.documents) {
+                    // toObject() automatically converts the document fields
+                    // into our Update data class
+                    // This works because our data class field names match
+                    // the Firestore field names exactly
+                    val update = document.toObject(Update::class.java)
+                    if (update != null) {
+                        // Copy the document ID into our object
+                        updateList.add(update.copy(documentId = document.id))
+                    }
+                }
+
+                // Show the RecyclerView with data
+                recyclerView.visibility = View.VISIBLE
+                layoutEmpty.visibility  = View.GONE
+
+                // Create adapter and connect to RecyclerView
+                val adapter = UpdateAdapter(requireContext(), updateList)
+                recyclerView.adapter = adapter
+            }
+            .addOnFailureListener { exception ->
+                progressBar.visibility = View.GONE
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to load updates: ${exception.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 }

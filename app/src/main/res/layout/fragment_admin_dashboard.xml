@@ -54,6 +54,44 @@
             android:layout_height="1dp"
             android:background="@color/accent"
             android:layout_marginBottom="28dp"/>
+        <!-- ===== UPDATES SECTION ===== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📢  UPDATES MANAGEMENT"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Create New Update Button -->
+        <Button
+            android:id="@+id/btnCreateUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="➕  Create New Update / Post"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Manage Updates Button -->
+        <Button
+            android:id="@+id/btnManageUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="⚙️  Manage Updates (Edit / Delete)"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/card_bg"
+            android:layout_marginBottom="28dp"/>
 
         <!-- ===== EVENTS SECTION ===== -->
         <TextView

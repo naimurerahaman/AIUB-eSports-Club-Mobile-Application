@@ -51,5 +51,15 @@ class AdminDashboardFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         }
+        val btnCreateUpdate  = view.findViewById<Button>(R.id.btnCreateUpdate)
+        val btnManageUpdates = view.findViewById<Button>(R.id.btnManageUpdates)
+
+        btnCreateUpdate.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminCreateUpdateFragment())
+        }
+
+        btnManageUpdates.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminManageUpdatesFragment())
+        }
     }
 }

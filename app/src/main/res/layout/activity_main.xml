@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- FrameLayout is the container/box that holds our fragments -->
-<!-- Think of it like an empty picture frame — we swap the picture (fragment) inside it -->
-<FrameLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragmentContainer"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_bg"/>
+    android:layout_height="match_parent">
+
+    <!-- ===== MAIN CONTENT (Toolbar + Fragments) ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/dark_bg">
+
+        <!-- Toolbar — MUST be here, above the fragment container -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/card_bg"
+            android:elevation="4dp"
+            app:title="AIUB eSports Club"
+            app:titleTextColor="@color/white"
+            app:navigationIconTint="@color/white"/>
+
+        <!-- Fragment Container — fragments load here BELOW the toolbar -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <!-- ===== SIDEBAR DRAWER ===== -->
+    <!-- MUST be second child of DrawerLayout -->
+    <!-- layout_gravity="start" makes it slide from left -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/card_bg"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/accent"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ===== MAIN MENU GROUP ===== -->
+    <!-- A group holds related menu items together -->
+    <!-- checkableBehavior="single" means only one item is highlighted at a time -->
+    <group
+        android:id="@+id/grpMain"
+        android:checkableBehavior="single">
+
+        <!-- My Profile item -->
+        <!-- android:id = unique ID we use in Kotlin to detect which item was clicked -->
+        <!-- android:title = text shown in the sidebar -->
+        <!-- android:icon = small icon shown next to the text -->
+        <item
+            android:id="@+id/nav_profile"
+            android:title="My Profile"
+            android:icon="@android:drawable/ic_menu_my_calendar"/>
+
+        <!-- View Events item -->
+        <item
+            android:id="@+id/nav_events"
+            android:title="View Events"
+            android:icon="@android:drawable/ic_menu_today"/>
+
+        <!-- Register Now item -->
+        <item
+            android:id="@+id/nav_register"
+            android:title="Register Now"
+            android:icon="@android:drawable/ic_menu_edit"/>
+
+        <!-- Our Players item -->
+        <item
+            android:id="@+id/nav_players"
+            android:title="Our Players"
+            android:icon="@android:drawable/ic_menu_manage"/>
+
+        <!-- View Registrations item -->
+        <item
+            android:id="@+id/nav_registrations"
+            android:title="View All Registrations"
+            android:icon="@android:drawable/ic_menu_agenda"/>
+
+    </group>
+
+    <!-- ===== BOTTOM GROUP (Logout) ===== -->
+    <!-- Separate group so logout appears visually separated at the bottom -->
+    <group android:id="@+id/grpBottom">
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Log Out"
+            android:icon="@android:drawable/ic_lock_power_off"/>
+
+    </group>
+
+</menu>
