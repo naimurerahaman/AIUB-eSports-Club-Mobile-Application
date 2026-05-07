@@ -74,6 +74,15 @@ class MainActivity : AppCompatActivity(),
                 }
             }
         )
+        // ===== FLOATING CHATBOT BUTTON =====
+        val fabChatbot = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabChatbot)
+
+        fabChatbot.setOnClickListener {
+            // Open the ChatbotFragment when FAB is tapped
+            loadFragment(ChatbotFragment())
+            // Update toolbar title
+            toolbar.title = "eSports Assistant 🤖"
+        }
     }
 
     // ===== SHOW USER EMAIL IN SIDEBAR HEADER =====
@@ -139,5 +148,13 @@ class MainActivity : AppCompatActivity(),
             transaction.addToBackStack(null)
         }
         transaction.commit()
+    }
+
+    // Call this to show or hide the FAB
+// Pass true  → FAB shows (normal screens)
+// Pass false → FAB hides (chat screen is open)
+    fun setChatbotFabVisible(visible: Boolean) {
+        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabChatbot)
+        if (visible) fab.show() else fab.hide()
     }
 }

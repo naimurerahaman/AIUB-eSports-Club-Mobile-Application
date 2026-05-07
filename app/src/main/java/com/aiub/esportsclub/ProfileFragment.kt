@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.EmailAuthProvider
 
 class ProfileFragment : Fragment() {
 
@@ -140,6 +141,131 @@ class ProfileFragment : Fragment() {
                 cbFreeFire  = cbFreeFire,
                 cbCS2       = cbCS2
             )
+        }
+        // ===== FIND PASSWORD CHANGE VIEWS =====
+        val etCurrentPassword    = view.findViewById<EditText>(R.id.etCurrentPassword)
+        val etNewPassword        = view.findViewById<EditText>(R.id.etNewPassword)
+        val etConfirmNewPassword = view.findViewById<EditText>(R.id.etConfirmNewPassword)
+        val btnChangePassword    = view.findViewById<Button>(R.id.btnChangePassword)
+
+// ===== CHANGE PASSWORD BUTTON =====
+        btnChangePassword.setOnClickListener {
+
+            val currentPassword = etCurrentPassword.text.toString().trim()
+            val newPassword     = etNewPassword.text.toString().trim()
+            val confirmPassword = etConfirmNewPassword.text.toString().trim()
+
+            // ===== VALIDATION =====
+            if (currentPassword.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Please enter your current password",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPassword.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Please enter a new password",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPassword.length < 6) {
+                Toast.makeText(requireContext(),
+                    "New password must be at least 6 characters",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPassword != confirmPassword) {
+                // Passwords don't match — very important check
+                Toast.makeText(requireContext(),
+                    "New passwords do not match!",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (currentPassword == newPassword) {
+                Toast.makeText(requireContext(),
+                    "New password must be different from current password",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // ===== GET CURRENT USER =====
+            val user = auth.currentUser
+            if (user == null) {
+                Toast.makeText(requireContext(),
+                    "User not logged in!",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // ===== STEP 1: RE-AUTHENTICATE THE USER =====
+            // Firebase requires the user to prove their identity
+            // before changing a sensitive thing like password
+            // We do this by creating a "credential" with their
+            // current email and current password
+            //
+            // Think of it like a bank —
+            // before changing your PIN, they ask you to confirm your old PIN first
+            val email      = user.email ?: ""
+            val credential = EmailAuthProvider.getCredential(email, currentPassword)
+
+            btnChangePassword.isEnabled = false
+            btnChangePassword.text = "Verifying..."
+
+            user.reauthenticate(credential)
+                .addOnSuccessListener {
+                    // ✅ Re-authentication successful
+                    // Current password was correct — now we can change it
+
+                    btnChangePassword.text = "Changing..."
+
+                    // ===== STEP 2: UPDATE PASSWORD =====
+                    // updatePassword() sends the new password to Firebase
+                    // Firebase saves it securely (hashed)
+                    user.updatePassword(newPassword)
+                        .addOnSuccessListener {
+                            // ✅ Password changed successfully
+
+                            btnChangePassword.isEnabled = true
+                            btnChangePassword.text = "🔐  Change Password"
+
+                            // Clear the password fields
+                            etCurrentPassword.text.clear()
+                            etNewPassword.text.clear()
+                            etConfirmNewPassword.text.clear()
+
+                            Toast.makeText(
+                                requireContext(),
+                                "Password changed successfully! ✅",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        .addOnFailureListener { exception ->
+                            btnChangePassword.isEnabled = true
+                            btnChangePassword.text = "🔐  Change Password"
+
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to change password: ${exception.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    // ❌ Re-authentication failed
+                    // This means the current password they typed is WRONG
+                    btnChangePassword.isEnabled = true
+                    btnChangePassword.text = "🔐  Change Password"
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Current password is incorrect!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
         }
     }
 
