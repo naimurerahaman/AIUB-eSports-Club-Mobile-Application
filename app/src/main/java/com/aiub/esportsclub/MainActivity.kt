@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(),
@@ -32,11 +34,8 @@ class MainActivity : AppCompatActivity(),
         navigationView = findViewById(R.id.navigationView)
         toolbar        = findViewById(R.id.toolbar)
 
-        // ===== STEP 1: SET TOOLBAR =====
-        // This replaces the default action bar with our custom toolbar
         setSupportActionBar(toolbar)
 
-        // ===== STEP 2: SET UP HAMBURGER TOGGLE =====
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -47,20 +46,23 @@ class MainActivity : AppCompatActivity(),
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // ===== STEP 3: SIDEBAR ITEM CLICK LISTENER =====
         navigationView.setNavigationItemSelectedListener(this)
 
-        // ===== STEP 4: SHOW USER INFO IN HEADER =====
         updateDrawerHeader()
 
-        // ===== STEP 5: LOAD HOME FRAGMENT =====
         if (savedInstanceState == null) {
             loadFragment(HomeFragment(), addToBackStack = false)
-            // Highlight the first item in sidebar as selected
             navigationView.setCheckedItem(R.id.nav_profile)
         }
 
-        // ===== STEP 6: BACK BUTTON HANDLER =====
+        // FAB chatbot button
+        val fabChatbot = findViewById<FloatingActionButton>(R.id.fabChatbot)
+        fabChatbot.setOnClickListener {
+            loadFragment(ChatbotFragment())
+            toolbar.title = "eSports Assistant 🤖"
+        }
+
+        // Back button handler
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -74,36 +76,48 @@ class MainActivity : AppCompatActivity(),
                 }
             }
         )
-        // ===== FLOATING CHATBOT BUTTON =====
-        val fabChatbot = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabChatbot)
-
-        fabChatbot.setOnClickListener {
-            // Open the ChatbotFragment when FAB is tapped
-            loadFragment(ChatbotFragment())
-            // Update toolbar title
-            toolbar.title = "eSports Assistant 🤖"
-        }
     }
 
-    // ===== SHOW USER EMAIL IN SIDEBAR HEADER =====
     private fun updateDrawerHeader() {
-        val headerView    = navigationView.getHeaderView(0)
-        val tvName        = headerView.findViewById<TextView>(R.id.tvNavUserName)
-        val tvEmail       = headerView.findViewById<TextView>(R.id.tvNavUserEmail)
-        val tvAvatar      = headerView.findViewById<TextView>(R.id.tvNavAvatar)
-        val currentUser   = auth.currentUser
+        val headerView  = navigationView.getHeaderView(0)
+        val tvName      = headerView.findViewById<TextView>(R.id.tvNavUserName)
+        val tvEmail     = headerView.findViewById<TextView>(R.id.tvNavUserEmail)
+        val tvAvatar    = headerView.findViewById<TextView>(R.id.tvNavAvatar)
+        val switchDark  = headerView.findViewById<SwitchMaterial>(R.id.switchDarkMode)
+        val tvThemeIcon = headerView.findViewById<TextView>(R.id.tvThemeIcon)
 
+        // Read saved preference
+        val isDark = ThemeManager.isDarkMode(this)
+
+        // Set switch BEFORE listener to avoid triggering it
+        switchDark.setOnCheckedChangeListener(null)
+        switchDark.isChecked = isDark
+        tvThemeIcon.text = if (isDark) "🌙" else "☀️"
+
+        // Now attach listener
+        switchDark.setOnCheckedChangeListener { _, isChecked ->
+            // Update icon
+            tvThemeIcon.text = if (isChecked) "🌙" else "☀️"
+
+            // Save to SharedPreferences
+            ThemeManager.saveTheme(this, isChecked)
+
+            // Apply theme — whole app redraws automatically
+            ThemeManager.applyTheme(isChecked)
+        }
+
+        // Show user info
+        val currentUser = auth.currentUser
         if (currentUser != null) {
-            val email   = currentUser.email ?: "No email"
-            tvEmail.text  = email
+            val email    = currentUser.email ?: ""
+            tvEmail.text = email
             tvAvatar.text = email.first().uppercaseChar().toString()
-            val name      = currentUser.displayName
-            tvName.text   = if (!name.isNullOrEmpty()) name
+            val name     = currentUser.displayName
+            tvName.text  = if (!name.isNullOrEmpty()) name
             else email.substringBefore("@")
         }
     }
 
-    // ===== HANDLE SIDEBAR ITEM CLICKS =====
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
@@ -140,7 +154,6 @@ class MainActivity : AppCompatActivity(),
         return true
     }
 
-    // ===== LOAD FRAGMENT =====
     fun loadFragment(fragment: Fragment, addToBackStack: Boolean = true) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainer, fragment)
@@ -150,11 +163,8 @@ class MainActivity : AppCompatActivity(),
         transaction.commit()
     }
 
-    // Call this to show or hide the FAB
-// Pass true  → FAB shows (normal screens)
-// Pass false → FAB hides (chat screen is open)
     fun setChatbotFabVisible(visible: Boolean) {
-        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabChatbot)
+        val fab = findViewById<FloatingActionButton>(R.id.fabChatbot)
         if (visible) fab.show() else fab.hide()
     }
 }

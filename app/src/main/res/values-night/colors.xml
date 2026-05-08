@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ===== DARK MODE COLORS ===== -->
+    <!-- These are used when Dark Mode is ON -->
+    <!-- Android automatically picks this file in dark mode -->
+
+    <color name="dark_bg">#0D0D0D</color>
+    <color name="card_bg">#1A1A2E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_gray">#AAAAAA</color>
+
+    <!-- Accent colors stay same in both modes -->
+    <color name="accent">#E94560</color>
+    <color name="accent_blue">#0F3460</color>
+    <color name="accent_main">#E94560</color>
+    <color name="accent_navy">#0F3460</color>
+
+    <!-- Switch colors -->
+    <color name="switch_thumb_on">#FFFFFF</color>
+    <color name="switch_thumb_off">#888888</color>
+    <color name="switch_track_on">#E94560</color>
+    <color name="switch_track_off">#444444</color>
+
+    <!-- Extra -->
+    <color name="light_bg">#0D0D0D</color>
+    <color name="light_card_bg">#1A1A2E</color>
+    <color name="light_text_primary">#FFFFFF</color>
+    <color name="light_text_secondary">#AAAAAA</color>
+    <color name="light_toolbar">#1A1A2E</color>
+
+    <!-- Required by Android -->
+    <color name="black">#FF000000</color>
+
+</resources>

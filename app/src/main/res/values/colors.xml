@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- This is the main dark background color of our app -->
+    <!-- ===== DARK THEME COLORS ===== -->
     <color name="dark_bg">#0D0D0D</color>
-
-    <!-- This is a slightly lighter dark color for cards -->
     <color name="card_bg">#1A1A2E</color>
-
-    <!-- This is the glowing purple/blue accent color -->
     <color name="accent">#E94560</color>
-
-    <!-- A second accent color for highlights -->
     <color name="accent_blue">#0F3460</color>
-
-    <!-- White color for text -->
     <color name="white">#FFFFFF</color>
-
-    <!-- Light gray for secondary text -->
     <color name="light_gray">#AAAAAA</color>
 
-    <!-- These two are required by Android. Keep them. -->
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- ===== LIGHT THEME COLORS (properly bright) ===== -->
+    <color name="light_bg">#EFEFEF</color>
+    <color name="light_card_bg">#FFFFFF</color>
+    <color name="light_text_primary">#111111</color>
+    <color name="light_text_secondary">#555555</color>
+    <color name="light_toolbar">#FFFFFF</color>
+
+    <!-- ===== SHARED ===== -->
+    <color name="accent_main">#E94560</color>
+    <color name="accent_navy">#0F3460</color>
     <color name="black">#FF000000</color>
+
+    <!-- ===== SWITCH COLORS ===== -->
+    <color name="switch_thumb_on">#FFFFFF</color>
+    <color name="switch_thumb_off">#BBBBBB</color>
+    <color name="switch_track_on">#E94560</color>
+    <color name="switch_track_off">#555555</color>
 
 </resources>

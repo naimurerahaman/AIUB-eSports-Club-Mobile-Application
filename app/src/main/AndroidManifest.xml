@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,69 +14,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AIUBeSportsClub">
+
+        <!-- ===== SPLASH — Opens first when app launches ===== -->
         <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false" />
-        <!-- LoginActivity is LAUNCHER — opens first -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AIUBeSportsClub.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- These are Activities (stay as Activities) -->
+        </activity>
+
+        <!-- ===== ENTRY ACTIVITIES (still Activities) ===== -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".SignupActivity"
             android:exported="false" />
         <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminLoginActivity"
-            android:exported="false" /> <!-- These are Fragment HOST Activities -->
+            android:exported="false" />
+
+        <!-- ===== FRAGMENT HOST ACTIVITIES ===== -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".AdminActivity"
-            android:exported="false" /> <!-- Admin Management Activities -->
-        <activity
-            android:name=".AdminDashboardActivity"
             android:exported="false" />
-        <activity
-            android:name=".AdminAddEventActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminManageEventsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminEditEventActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminAddPlayerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminManagePlayersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminEditPlayerActivity"
-            android:exported="false" /> <!-- User/Player Activities -->
-        <activity
-            android:name=".EventsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PlayersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EventDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistrationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistrationsListActivity"
-            android:exported="false" />
-        <activity android:name=".ForgotPasswordActivity"
-            android:exported="false"/>
+
     </application>
 
 </manifest>

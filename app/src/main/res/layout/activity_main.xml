@@ -23,11 +23,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/card_bg"
+                android:background="?attr/colorSurface"
                 android:elevation="4dp"
                 app:title="AIUB eSports Club"
-                app:titleTextColor="@color/white"
-                app:navigationIconTint="@color/white"/>
+                app:titleTextColor="?attr/colorOnSurface"
+                app:navigationIconTint="?attr/colorOnSurface"/>
 
             <FrameLayout
                 android:id="@+id/fragmentContainer"
@@ -60,10 +60,10 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/card_bg"
+        android:background="?attr/colorSurface"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/accent"/>
+        app:itemTextColor="?attr/colorOnSurface"
+        app:itemIconTint="@color/accent_main"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
