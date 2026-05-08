@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Internet permission — needed for FCM -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- POST_NOTIFICATIONS permission — required for Android 13+ -->
+    <!-- Without this, notifications won't show on newer phones -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".MyApplication"
@@ -15,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIUBeSportsClub">
 
-        <!-- ===== SPLASH — Opens first when app launches ===== -->
+        <!-- ===== SPLASH — Opens first ===== -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -26,27 +31,27 @@
             </intent-filter>
         </activity>
 
-        <!-- ===== ENTRY ACTIVITIES (still Activities) ===== -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminLoginActivity"
-            android:exported="false" />
+        <!-- ===== ENTRY ACTIVITIES ===== -->
+        <activity android:name=".LoginActivity"          android:exported="false" />
+        <activity android:name=".SignupActivity"         android:exported="false" />
+        <activity android:name=".ForgotPasswordActivity" android:exported="false" />
+        <activity android:name=".AdminLoginActivity"     android:exported="false" />
 
         <!-- ===== FRAGMENT HOST ACTIVITIES ===== -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminActivity"
-            android:exported="false" />
+        <activity android:name=".MainActivity"  android:exported="false" />
+        <activity android:name=".AdminActivity" android:exported="false" />
+
+        <!-- ===== FIREBASE MESSAGING SERVICE ===== -->
+        <!-- This is the service that receives notifications -->
+        <!-- android:exported="false" means only our app can start it -->
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <!-- This tells Android: use this service for FCM messages -->
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

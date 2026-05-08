@@ -40,11 +40,12 @@ class AdminCreateUpdateFragment : Fragment() {
         }
 
         btnPost.setOnClickListener {
+
             val title    = etTitle.text.toString().trim()
             val desc     = etDesc.text.toString().trim()
             val imageUrl = etImageUrl.text.toString().trim()
 
-            // Validation
+            // ===== VALIDATION =====
             if (title.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter a title!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -54,38 +55,83 @@ class AdminCreateUpdateFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Build the data object
+            // ===== BUILD THE UPDATE DATA =====
             val updateData = hashMapOf(
                 "title"       to title,
                 "description" to desc,
-                "imageUrl"    to imageUrl, // empty string if not provided
+                "imageUrl"    to imageUrl,
                 "timestamp"   to System.currentTimeMillis()
             )
 
-            btnPost.isEnabled = false
-            btnPost.text = "Posting..."
+            // Show loading state
+            btnPost.isEnabled      = false
+            btnPost.text           = "Posting..."
             progressBar.visibility = View.VISIBLE
 
-            // Save to Firestore "updates" collection
+            // ===== STEP 1: SAVE UPDATE TO FIRESTORE =====
+            // This saves the post to the "updates" collection
+            // which shows in the Home Screen news feed
             db.collection("updates")
                 .add(updateData)
                 .addOnSuccessListener {
-                    btnPost.isEnabled = true
-                    btnPost.text = "📢  Post Update"
+
+                    // ===== STEP 2: SAVE NOTIFICATION TRIGGER =====
+                    // After saving the update, we also save it to
+                    // the "notifications" collection
+                    // This acts as a record of all notifications sent
+                    // and can be used later for notification history
+                    val notificationData = hashMapOf(
+                        "title"     to title,
+                        "body"      to desc,
+                        "timestamp" to System.currentTimeMillis(),
+                        "sentBy"    to "admin"
+                    )
+
+                    db.collection("notifications")
+                        .add(notificationData)
+                        .addOnSuccessListener {
+                            android.util.Log.d(
+                                "NOTIFICATION",
+                                "Notification trigger saved successfully"
+                            )
+                        }
+                        .addOnFailureListener { exception ->
+                            // If notification save fails, we don't crash the app
+                            // The update was already saved — this is just extra
+                            android.util.Log.e(
+                                "NOTIFICATION",
+                                "Failed to save notification: ${exception.message}"
+                            )
+                        }
+
+                    // ===== RESET UI =====
+                    btnPost.isEnabled      = true
+                    btnPost.text           = "📢  Post Update"
                     progressBar.visibility = View.GONE
 
-                    Toast.makeText(requireContext(), "Update posted! ✅", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Update posted successfully! ✅",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                    // Clear fields for next post
+                    // Clear all fields so admin can add another post
                     etTitle.text.clear()
                     etDesc.text.clear()
                     etImageUrl.text.clear()
                 }
                 .addOnFailureListener { exception ->
-                    btnPost.isEnabled = true
-                    btnPost.text = "📢  Post Update"
+
+                    // Something went wrong — reset UI and show error
+                    btnPost.isEnabled      = true
+                    btnPost.text           = "📢  Post Update"
                     progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_LONG).show()
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${exception.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
         }
     }
