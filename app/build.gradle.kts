@@ -1,3 +1,4 @@
+import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
@@ -5,10 +6,17 @@ plugins {
 
 android {
     namespace = "com.aiub.esportsclub"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
+    compileSdk = 36
+
+    // ===== READ API KEY HERE — outside all blocks =====
+    // This way BOTH defaultConfig and release can access it
+    val geminiKey: String = run {
+        val props = Properties()
+        val file = rootProject.file("local.properties")
+        if (file.exists()) {
+            file.reader().use { props.load(it) }
         }
+        props.getProperty("GEMINI_API_KEY") ?: ""
     }
 
     defaultConfig {
@@ -17,8 +25,13 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -28,8 +41,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -37,34 +52,32 @@ android {
 }
 
 dependencies {
+
+    // ===== CORE ANDROID =====
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+
+    // ===== FIREBASE =====
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // ===== GEMINI AI =====
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // ===== COROUTINES =====
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
+    // ===== GLIDE =====
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // ===== TESTING =====
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // ===== FIREBASE LIBRARIES =====
-
-    // This is the Firebase "Bill of Materials" (BoM)
-    // It makes sure all Firebase libraries use the same compatible version
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-
-    // Firebase Authentication — for login and signup
-    implementation("com.google.firebase:firebase-auth-ktx")
-
-    // Cloud Firestore — for storing and reading data
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
-    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
-    implementation("com.google.android.material:material:1.11.0")
-    // Keep your existing dependencies below
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    // Glide loads images from internet URLs into ImageViews
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
 }
