@@ -5,7 +5,6 @@
         android:id="@+id/grpMain"
         android:checkableBehavior="single">
 
-        <!-- Home — NEW -->
         <item
             android:id="@+id/nav_home"
             android:title="Home"
@@ -26,15 +25,11 @@
             android:title="Register Now"
             android:icon="@android:drawable/ic_menu_edit"/>
 
+        <!-- NEW -->
         <item
-            android:id="@+id/nav_players"
-            android:title="Our Players"
-            android:icon="@android:drawable/ic_menu_manage"/>
-
-        <item
-            android:id="@+id/nav_registrations"
-            android:title="View All Registrations"
-            android:icon="@android:drawable/ic_menu_agenda"/>
+            android:id="@+id/nav_membership"
+            android:title="Become a AESC Member"
+            android:icon="@android:drawable/ic_menu_add"/>
 
     </group>
 

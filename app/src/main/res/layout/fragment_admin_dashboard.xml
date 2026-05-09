@@ -127,7 +127,83 @@
             android:textColor="@color/light_gray"
             android:layout_marginBottom="24dp"/>
 
+        <Button
+            android:id="@+id/btnViewRegistrations"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="View Registrations"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="24dp"/>
         <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/card_bg"
+            android:layout_marginBottom="24dp"/>
+        <!-- ===== RECRUITMENT CONTROL ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEMBERSHIP RECRUITMENT"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="@color/card_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <ProgressBar
+                android:id="@+id/progressRecruitStatus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tvRecruitStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Checking status..."
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchRecruitOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toggle ON to open recruitment. Toggle OFF to close it."
+            android:textSize="11sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnViewMemberApplications"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="View Member Applications"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="24dp"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

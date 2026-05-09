@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/card_bg"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp">
+
+    <!-- Name -->
+    <TextView
+        android:id="@+id/tvRegName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Student ID -->
+    <TextView
+        android:id="@+id/tvRegStudentId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student ID"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Gender -->
+    <TextView
+        android:id="@+id/tvRegGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Platforms -->
+    <TextView
+        android:id="@+id/tvRegPlatforms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Platforms"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Games -->
+    <TextView
+        android:id="@+id/tvRegGames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Games"
+        android:textSize="13sp"
+        android:textColor="@color/accent"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Format -->
+    <TextView
+        android:id="@+id/tvRegFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Format"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Suggestions -->
+    <TextView
+        android:id="@+id/tvRegSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Suggestions"
+        android:textSize="12sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Delete Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btnDeleteReg"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Delete"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#C0392B"/>
+
+    </LinearLayout>
+
+</LinearLayout>

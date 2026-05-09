@@ -132,14 +132,19 @@ class MainActivity : AppCompatActivity(),
                 loadFragment(RegistrationFragment())
                 toolbar.title = "Register"
             }
-            R.id.nav_players -> {
-                loadFragment(PlayersFragment())
-                toolbar.title = "Players"
+
+            R.id.nav_membership -> {
+                loadFragment(MemberRegistrationFragment())
+                toolbar.title = "Become a Member"
             }
-            R.id.nav_registrations -> {
-                loadFragment(RegistrationsListFragment())
-                toolbar.title = "Registrations"
-            }
+//            R.id.nav_players -> {
+//                loadFragment(PlayersFragment())
+//                toolbar.title = "Players"
+//            }
+//            R.id.nav_registrations -> {
+//                loadFragment(RegistrationsListFragment())
+//                toolbar.title = "Registrations"
+//            }
             R.id.nav_logout -> {
                 auth.signOut()
                 Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show()

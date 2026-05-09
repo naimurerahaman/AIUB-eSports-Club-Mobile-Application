@@ -31,15 +31,8 @@ class AdminDashboardFragment : Fragment() {
 
         db = FirebaseFirestore.getInstance()
 
-        // Find analytics button
-        val btnAnalytics = view.findViewById<Button>(R.id.btnViewAnalytics)
-
-// Navigate to analytics
-        btnAnalytics.setOnClickListener {
-            (requireActivity() as AdminActivity).loadFragment(AdminAnalyticsFragment())
-        }
-
-        // ===== FIND ALL VIEWS =====
+        // Navigation buttons
+        val btnAnalytics     = view.findViewById<Button>(R.id.btnViewAnalytics)
         val btnAddEvent      = view.findViewById<Button>(R.id.btnAddEvent)
         val btnManageEvents  = view.findViewById<Button>(R.id.btnManageEvents)
         val btnAddPlayer     = view.findViewById<Button>(R.id.btnAddPlayer)
@@ -47,34 +40,53 @@ class AdminDashboardFragment : Fragment() {
         val btnCreateUpdate  = view.findViewById<Button>(R.id.btnCreateUpdate)
         val btnManageUpdates = view.findViewById<Button>(R.id.btnManageUpdates)
         val btnLogout        = view.findViewById<Button>(R.id.btnAdminLogout)
+
+        // Registration control
         val switchReg        = view.findViewById<SwitchMaterial>(R.id.switchRegOpen)
         val tvRegStatus      = view.findViewById<TextView>(R.id.tvRegStatus)
         val progressReg      = view.findViewById<ProgressBar>(R.id.progressRegStatus)
+        // Find the button
+        val btnViewRegistrations = view.findViewById<Button>(R.id.btnViewRegistrations)
 
-        // ===== LOAD REGISTRATION STATUS FROM FIREBASE =====
+        // Navigate to view registrations
+        btnViewRegistrations.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminViewRegistrationsFragment())
+        }
+        // Recruitment control
+        val switchRecruit    = view.findViewById<SwitchMaterial>(R.id.switchRecruitOpen)
+        val tvRecruitStatus  = view.findViewById<TextView>(R.id.tvRecruitStatus)
+        val progressRecruit  = view.findViewById<ProgressBar>(R.id.progressRecruitStatus)
+        val btnViewApps      = view.findViewById<Button>(R.id.btnViewMemberApplications)
+
+        // Load statuses
         loadRegistrationStatus(switchReg, tvRegStatus, progressReg)
+        loadRecruitmentStatus(switchRecruit, tvRecruitStatus, progressRecruit)
 
-        // ===== NAVIGATION BUTTONS =====
+        // View member applications
+        btnViewApps.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminMemberApplicationsFragment())
+        }
+
+        // Analytics
+        btnAnalytics.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminAnalyticsFragment())
+        }
+
         btnAddEvent.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminAddEventFragment())
         }
-
         btnManageEvents.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminManageEventsFragment())
         }
-
         btnAddPlayer.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminAddPlayerFragment())
         }
-
         btnManagePlayers.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminManagePlayersFragment())
         }
-
         btnCreateUpdate.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminCreateUpdateFragment())
         }
-
         btnManageUpdates.setOnClickListener {
             (requireActivity() as AdminActivity).loadFragment(AdminManageUpdatesFragment())
         }
@@ -88,7 +100,7 @@ class AdminDashboardFragment : Fragment() {
         }
     }
 
-    // ===== READ REGISTRATION STATUS FROM FIRESTORE =====
+    // ===== REGISTRATION STATUS =====
     private fun loadRegistrationStatus(
         switchReg  : SwitchMaterial,
         tvStatus   : TextView,
@@ -97,66 +109,95 @@ class AdminDashboardFragment : Fragment() {
         progressBar.visibility = View.VISIBLE
         switchReg.isEnabled    = false
 
-        db.collection("settings")
-            .document("registration")
-            .get()
+        db.collection("settings").document("registration").get()
             .addOnSuccessListener { document ->
                 progressBar.visibility = View.GONE
                 switchReg.isEnabled    = true
 
                 val isOpen = document.getBoolean("isOpen") ?: false
-
-                // Set switch BEFORE listener to avoid triggering it
                 switchReg.setOnCheckedChangeListener(null)
                 switchReg.isChecked = isOpen
-                updateStatusText(tvStatus, isOpen)
+                updateRegStatusText(tvStatus, isOpen)
 
-                // Now attach listener
                 switchReg.setOnCheckedChangeListener { _, isChecked ->
-                    saveRegistrationStatus(isChecked, tvStatus)
+                    db.collection("settings").document("registration")
+                        .set(mapOf("isOpen" to isChecked))
+                        .addOnSuccessListener {
+                            updateRegStatusText(tvStatus, isChecked)
+                            Toast.makeText(
+                                requireContext(),
+                                if (isChecked) "Registration OPENED" else "Registration CLOSED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 progressBar.visibility = View.GONE
                 switchReg.isEnabled    = true
-                tvStatus.text          = "Error loading status"
-                tvStatus.setTextColor(Color.RED)
-
-                Toast.makeText(
-                    requireContext(),
-                    "Error: ${exception.message}",
-                    Toast.LENGTH_LONG
-                ).show()
+                tvStatus.text          = "Error loading"
             }
     }
 
-    // ===== SAVE STATUS TO FIRESTORE =====
-    private fun saveRegistrationStatus(isOpen: Boolean, tvStatus: TextView) {
-        db.collection("settings")
-            .document("registration")
-            .set(mapOf("isOpen" to isOpen))
-            .addOnSuccessListener {
-                updateStatusText(tvStatus, isOpen)
-                val message = if (isOpen) "Registration OPENED" else "Registration CLOSED"
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private fun updateRegStatusText(tvStatus: TextView, isOpen: Boolean) {
+        tvStatus.text = if (isOpen) "Registration is OPEN" else "Registration is CLOSED"
+        tvStatus.setTextColor(
+            Color.parseColor(if (isOpen) "#2ECC71" else "#E74C3C")
+        )
+    }
+
+    // ===== RECRUITMENT STATUS =====
+    private fun loadRecruitmentStatus(
+        switchRecruit: SwitchMaterial,
+        tvStatus     : TextView,
+        progressBar  : ProgressBar
+    ) {
+        progressBar.visibility  = View.VISIBLE
+        switchRecruit.isEnabled = false
+
+        // Read from recruitmentStatus → membership → isOpen
+        db.collection("recruitmentStatus").document("membership").get()
+            .addOnSuccessListener { document ->
+                progressBar.visibility  = View.GONE
+                switchRecruit.isEnabled = true
+
+                val isOpen = document.getBoolean("isOpen") ?: false
+                switchRecruit.setOnCheckedChangeListener(null)
+                switchRecruit.isChecked = isOpen
+                updateRecruitStatusText(tvStatus, isOpen)
+
+                switchRecruit.setOnCheckedChangeListener { _, isChecked ->
+                    // Save new status to Firestore
+                    db.collection("recruitmentStatus").document("membership")
+                        .set(mapOf("isOpen" to isChecked))
+                        .addOnSuccessListener {
+                            updateRecruitStatusText(tvStatus, isChecked)
+                            Toast.makeText(
+                                requireContext(),
+                                if (isChecked) "Recruitment OPENED" else "Recruitment CLOSED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed: ${exception.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(
-                    requireContext(),
-                    "Failed: ${exception.message}",
-                    Toast.LENGTH_LONG
-                ).show()
+            .addOnFailureListener {
+                progressBar.visibility  = View.GONE
+                switchRecruit.isEnabled = true
+                tvStatus.text           = "Error loading"
             }
     }
 
-    // ===== UPDATE STATUS TEXT COLOR AND MESSAGE =====
-    private fun updateStatusText(tvStatus: TextView, isOpen: Boolean) {
-        if (isOpen) {
-            tvStatus.text = "Registration is OPEN"
-            tvStatus.setTextColor(Color.parseColor("#2ECC71")) // green
-        } else {
-            tvStatus.text = "Registration is CLOSED"
-            tvStatus.setTextColor(Color.parseColor("#E74C3C")) // red
-        }
+    private fun updateRecruitStatusText(tvStatus: TextView, isOpen: Boolean) {
+        tvStatus.text = if (isOpen) "Recruitment is OPEN" else "Recruitment is CLOSED"
+        tvStatus.setTextColor(
+            Color.parseColor(if (isOpen) "#2ECC71" else "#E74C3C")
+        )
     }
 }
