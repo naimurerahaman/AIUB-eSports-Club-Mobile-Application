@@ -78,7 +78,10 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setupForm(view: View) {
-
+        val btnBack = view.findViewById<Button>(R.id.btnBackRegistration)
+        btnBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         // Basic info
         val etName        = view.findViewById<EditText>(R.id.etRegName)
         val etStudentId   = view.findViewById<EditText>(R.id.etRegStudentId)

@@ -120,6 +120,12 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
+            R.id.nav_home -> {          // NEW
+                loadFragment(HomeFragment(), addToBackStack = false)
+                toolbar.title = "AIUB eSports Club"
+            }
+
             R.id.nav_profile -> {
                 loadFragment(ProfileFragment())
                 toolbar.title = "My Profile"
