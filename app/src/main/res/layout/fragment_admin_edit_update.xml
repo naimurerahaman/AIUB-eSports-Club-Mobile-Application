@@ -12,7 +12,7 @@
         android:padding="24dp">
 
         <Button
-            android:id="@+id/btnBackCreateUpdate"
+            android:id="@+id/btnBackEditUpdate"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="← Back"
@@ -23,11 +23,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📢 Create New Update"
+            android:text="✏️ Edit Update"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fields are pre-filled. Change what you need."
+            android:textSize="12sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="28dp"/>
 
         <!-- Title -->
         <TextView
@@ -39,12 +47,10 @@
             android:layout_marginBottom="6dp"/>
 
         <EditText
-            android:id="@+id/etUpdateTitle"
+            android:id="@+id/etEditUpdateTitle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="e.g. PUBG Tournament Registration Open!"
             android:textColor="@color/white"
-            android:textColorHint="@color/light_gray"
             android:background="@color/card_bg"
             android:padding="14dp"
             android:inputType="text"
@@ -60,12 +66,10 @@
             android:layout_marginBottom="6dp"/>
 
         <EditText
-            android:id="@+id/etUpdateDescription"
+            android:id="@+id/etEditUpdateDescription"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:hint="Write the full announcement here..."
             android:textColor="@color/white"
-            android:textColorHint="@color/light_gray"
             android:background="@color/card_bg"
             android:padding="14dp"
             android:inputType="textMultiLine"
@@ -82,7 +86,7 @@
             android:layout_marginBottom="6dp"/>
 
         <EditText
-            android:id="@+id/etUpdateImageUrl"
+            android:id="@+id/etEditUpdateImageUrl"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:hint="https://example.com/image.jpg"
@@ -102,7 +106,6 @@
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Small hint below the label -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,7 +115,7 @@
             android:layout_marginBottom="6dp"/>
 
         <EditText
-            android:id="@+id/etUpdateLink"
+            android:id="@+id/etEditUpdateLink"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:hint="https://example.com/register"
@@ -123,19 +126,19 @@
             android:inputType="textUri"
             android:layout_marginBottom="28dp"/>
 
-        <!-- Post Button -->
+        <!-- Save Button -->
         <Button
-            android:id="@+id/btnPostUpdate"
+            android:id="@+id/btnSaveEditUpdate"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="📢  Post Update"
+            android:text="✅  Save Changes"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"/>
 
         <!-- Loading -->
         <ProgressBar
-            android:id="@+id/progressBarCreateUpdate"
+            android:id="@+id/progressBarEditUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

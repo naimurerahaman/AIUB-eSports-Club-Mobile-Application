@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This is the design for ONE update card in the feed -->
-<!-- CardView gives us the nice rounded card with shadow effect -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,8 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- ===== POST IMAGE (optional) ===== -->
-        <!-- visibility="gone" by default — only shown if imageUrl is not empty -->
+        <!-- Post Image (optional) -->
         <ImageView
             android:id="@+id/ivUpdateImage"
             android:layout_width="match_parent"
@@ -26,14 +23,14 @@
             android:visibility="gone"
             android:contentDescription="Update image"/>
 
-        <!-- ===== TEXT CONTENT ===== -->
+        <!-- Text Content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Club tag badge -->
+            <!-- Club badge -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,13 +56,13 @@
                 android:id="@+id/tvUpdateDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description text goes here"
+                android:text="Description text"
                 android:textSize="13sp"
                 android:textColor="@color/light_gray"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- Divider line -->
+            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -73,14 +70,28 @@
                 android:alpha="0.3"
                 android:layout_marginBottom="10dp"/>
 
-            <!-- Post Date/Time -->
+            <!-- Date -->
             <TextView
                 android:id="@+id/tvUpdateDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🕐 Just now"
                 android:textSize="11sp"
-                android:textColor="@color/light_gray"/>
+                android:textColor="@color/light_gray"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- ===== NEW: Link Button ===== -->
+            <!-- visibility="gone" by default -->
+            <!-- Only shown when admin provides a link -->
+            <Button
+                android:id="@+id/btnUpdateLink"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="🔗  Visit Link"
+                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/accent_blue"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>
