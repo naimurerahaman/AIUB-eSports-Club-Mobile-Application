@@ -16,7 +16,7 @@
             android:id="@+id/btnBackAddEvent"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="← Back"
+            android:text="Back"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"
             android:layout_marginBottom="20dp"/>
@@ -25,27 +25,77 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="➕ Add New Event"
+            android:text="Add New Event"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Event Name Label -->
+        <!-- ===== BANNER IMAGE SECTION ===== -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event Name"
+            android:text="Event Banner Image"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Event Name Input -->
+        <!-- Preview of selected image -->
+        <ImageView
+            android:id="@+id/ivBannerPreview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:background="@color/card_bg"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:contentDescription="Banner preview"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Upload progress bar — hidden by default -->
+        <ProgressBar
+            android:id="@+id/progressUpload"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:visibility="gone"
+            android:progressTint="@color/accent"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Upload status text -->
+        <TextView
+            android:id="@+id/tvUploadStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Select Image Button -->
+        <Button
+            android:id="@+id/btnSelectBanner"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Select Image from Gallery"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- ===== EVENT NAME ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Title *"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etEventName"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="e.g. PUBG Tournament"
+            android:hint="e.g. PUBG Championship 2025"
             android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:background="@color/card_bg"
@@ -53,60 +103,77 @@
             android:inputType="text"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Game Name Label -->
+        <!-- ===== DESCRIPTION ===== -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Game Name"
+            android:text="Event Description *"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Game Name Input -->
         <EditText
-            android:id="@+id/etGameName"
+            android:id="@+id/etEventDescription"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:hint="e.g. PUBG Mobile"
+            android:layout_height="120dp"
+            android:hint="Describe the event in detail..."
             android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:background="@color/card_bg"
             android:padding="14dp"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:gravity="top"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Date Label -->
+        <!-- ===== DATE ===== -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event Date"
+            android:text="Event Date *"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Date Input -->
-        <EditText
-            android:id="@+id/etEventDate"
+        <!-- Date picker row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:hint="e.g. July 15, 2025"
-            android:textColor="@color/white"
-            android:textColorHint="@color/light_gray"
-            android:background="@color/card_bg"
-            android:padding="14dp"
-            android:inputType="text"
-            android:layout_marginBottom="16dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
-        <!-- Prize Label -->
+            <EditText
+                android:id="@+id/etEventDate"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:hint="Select a date"
+                android:textColor="@color/white"
+                android:textColorHint="@color/light_gray"
+                android:background="@color/card_bg"
+                android:padding="14dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnPickDate"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:text="Pick"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/accent"/>
+
+        </LinearLayout>
+
+        <!-- ===== PRIZE ===== -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prize"
+            android:text="Prize *"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Prize Input -->
         <EditText
             android:id="@+id/etEventPrize"
             android:layout_width="match_parent"
@@ -119,27 +186,83 @@
             android:inputType="text"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Description Label -->
+        <!-- ===== GAME NAME ===== -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="Game Name *"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Description Input (multi-line) -->
         <EditText
-            android:id="@+id/etEventDescription"
+            android:id="@+id/etGameName"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:hint="Describe the event..."
+            android:layout_height="56dp"
+            android:hint="e.g. PUBG Mobile"
             android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:background="@color/card_bg"
             android:padding="14dp"
-            android:inputType="textMultiLine"
-            android:gravity="top"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== REGISTRATION LINK ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registration Link *"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Users will tap this to register for the event"
+            android:textSize="11sp"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etRegistrationLink"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="https://forms.google.com/..."
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textUri"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ===== EVENT LINK ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Link (Optional)"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Facebook event, Discord, or tournament page"
+            android:textSize="11sp"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEventLink"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="https://facebook.com/events/..."
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textUri"
             android:layout_marginBottom="28dp"/>
 
         <!-- Save Button -->
@@ -147,10 +270,19 @@
             android:id="@+id/btnSaveEvent"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="💾  Save Event to Firebase"
+            android:text="Save Event"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"/>
+
+        <!-- Saving progress bar -->
+        <ProgressBar
+            android:id="@+id/progressSaveEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </ScrollView>

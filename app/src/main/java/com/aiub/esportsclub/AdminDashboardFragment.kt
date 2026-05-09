@@ -31,6 +31,14 @@ class AdminDashboardFragment : Fragment() {
 
         db = FirebaseFirestore.getInstance()
 
+        // Find analytics button
+        val btnAnalytics = view.findViewById<Button>(R.id.btnViewAnalytics)
+
+// Navigate to analytics
+        btnAnalytics.setOnClickListener {
+            (requireActivity() as AdminActivity).loadFragment(AdminAnalyticsFragment())
+        }
+
         // ===== FIND ALL VIEWS =====
         val btnAddEvent      = view.findViewById<Button>(R.id.btnAddEvent)
         val btnManageEvents  = view.findViewById<Button>(R.id.btnManageEvents)

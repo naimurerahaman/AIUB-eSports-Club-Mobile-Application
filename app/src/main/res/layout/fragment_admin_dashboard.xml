@@ -54,6 +54,23 @@
             android:background="@color/accent"
             android:layout_marginBottom="24dp"/>
 
+        <!-- ===== ANALYTICS BUTTON ===== -->
+        <Button
+            android:id="@+id/btnViewAnalytics"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Analytics Dashboard"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#2C3E50"
+            android:layout_marginBottom="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="24dp"/>
+
         <!-- ===== REGISTRATION CONTROL ===== -->
         <TextView
             android:layout_width="match_parent"

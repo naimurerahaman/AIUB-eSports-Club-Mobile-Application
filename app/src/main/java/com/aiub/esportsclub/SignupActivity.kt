@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignupActivity : AppCompatActivity() {
 
@@ -76,6 +77,18 @@ class SignupActivity : AppCompatActivity() {
             // The password is NEVER stored as plain text — Firebase hashes it
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
+                    // Save user info to Firestore "users" collection
+                    // This is how we count total users in Analytics
+                    val userId = auth.currentUser?.uid ?: ""
+                    val userDoc = hashMapOf(
+                        "email"     to email,
+                        "userId"    to userId,
+                        "createdAt" to System.currentTimeMillis()
+                    )
+                    FirebaseFirestore.getInstance()
+                        .collection("users")
+                        .document(userId)
+                        .set(userDoc)
                     // Account created successfully!
                     progressBar.visibility = View.GONE
                     Toast.makeText(this, "Account created! Welcome 🎉", Toast.LENGTH_SHORT).show()

@@ -47,15 +47,19 @@ class EventsFragment : Fragment() {
                 val eventList = mutableListOf<Event>()
 
                 for (document in querySnapshot.documents) {
-                    eventList.add(
-                        Event(
-                            icon        = document.getString("icon")        ?: "🎮",
-                            name        = document.getString("name")        ?: "",
-                            date        = document.getString("date")        ?: "",
-                            prize       = document.getString("prize")       ?: "",
-                            description = document.getString("description") ?: ""
-                        )
+                    val event = Event(
+                        documentId       = document.id,
+                        icon             = document.getString("icon")             ?: "🎮",
+                        name             = document.getString("name")             ?: "",
+                        date             = document.getString("date")             ?: "",
+                        prize            = document.getString("prize")            ?: "",
+                        description      = document.getString("description")     ?: "",
+                        game             = document.getString("game")             ?: "",
+                        registrationLink = document.getString("registrationLink") ?: "",
+                        eventLink        = document.getString("eventLink")        ?: "",
+                        bannerImageUrl   = document.getString("bannerImageUrl")   ?: ""
                     )
+                    eventList.add(event)
                 }
 
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
