@@ -1,6 +1,5 @@
 package com.aiub.esportsclub
 
-import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -23,20 +22,20 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val SPLASH_DURATION = 2500L
 
-    // ===== NOTIFICATION PERMISSION LAUNCHER =====
-    // This is the modern way to request permissions in Android
-    // registerForActivityResult handles the user's yes/no response
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        // isGranted = true  → user allowed notifications
-        // isGranted = false → user denied notifications
-        // Either way we continue the app — notifications are optional
         android.util.Log.d("PERMISSION", "Notification permission: $isGranted")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ===== DO NOT call enableEdgeToEdge() =====
+        // We handle system bars manually via themes.xml
+        // enableEdgeToEdge() causes content to draw behind bars
+        // which is why we remove it here
+
         setContentView(R.layout.activity_splash)
 
         auth = FirebaseAuth.getInstance()
@@ -48,56 +47,33 @@ class SplashActivity : AppCompatActivity() {
         val layoutBottom = findViewById<LinearLayout>(R.id.layoutSplashBottom)
         val tvLoading    = findViewById<TextView>(R.id.tvLoadingText)
 
-        // Start animations
         startAnimations(layoutCenter, layoutBottom)
         animateLoadingText(tvLoading)
-
-        // Request notification permission for Android 13+
         requestNotificationPermission()
-
-        // Get and log FCM token (useful for testing)
         getFCMToken()
 
-        // Navigate after delay
         Handler(Looper.getMainLooper()).postDelayed({
             navigateToNextScreen()
         }, SPLASH_DURATION)
     }
 
-    // ===== REQUEST NOTIFICATION PERMISSION =====
     private fun requestNotificationPermission() {
-        // POST_NOTIFICATIONS permission only needed on Android 13 (API 33)+
-        // Older Android versions don't need this permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-            // Check if permission is already granted
             val isGranted = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
+                this, android.Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
-
             if (!isGranted) {
-                // Ask the user for permission
-                // A system dialog will appear asking "Allow notifications?"
                 requestPermissionLauncher.launch(
-                    Manifest.permission.POST_NOTIFICATIONS
+                    android.Manifest.permission.POST_NOTIFICATIONS
                 )
             }
         }
-        // Below Android 13 → notifications work without asking
     }
 
-    // ===== GET FCM TOKEN =====
-    // The FCM token is like the phone number of this specific app installation
-    // Firebase sends notifications TO this token
     private fun getFCMToken() {
         FirebaseMessaging.getInstance().token
             .addOnSuccessListener { token ->
-                // Log the token so you can copy it for testing
                 android.util.Log.d("FCM_TOKEN", "Token: $token")
-            }
-            .addOnFailureListener { exception ->
-                android.util.Log.e("FCM_TOKEN", "Failed: ${exception.message}")
             }
     }
 

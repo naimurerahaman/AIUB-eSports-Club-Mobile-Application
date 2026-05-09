@@ -9,6 +9,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 // We import Firebase Authentication
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +24,21 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        // ===== FIX STATUS BAR OVERLAY =====
+// This tells Android: "don't let your app draw behind system bars"
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
+// Set status bar color to match toolbar
+        window.statusBarColor = android.graphics.Color.parseColor("#1A1A2E")
+
+// Set navigation bar color to match app background
+        window.navigationBarColor = android.graphics.Color.parseColor("#0D0D0D")
+
+// Make status bar icons WHITE (visible on dark background)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars    = false  // false = white icons
+            isAppearanceLightNavigationBars = false  // false = white icons
+        }
         // ===== INITIALIZE FIREBASE AUTH =====
         // This line connects us to Firebase Authentication service
         // FirebaseAuth.getInstance() returns the one shared auth object

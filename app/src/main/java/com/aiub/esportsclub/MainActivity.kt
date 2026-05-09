@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.FirebaseAuth
 
+
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,12 +28,18 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ===== DO NOT call enableEdgeToEdge() =====
+        // Removed — causes content to draw behind system bars
+        // We control status/nav bar colors via themes.xml instead
+
         setContentView(R.layout.activity_main)
 
         auth           = FirebaseAuth.getInstance()
         drawerLayout   = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navigationView)
         toolbar        = findViewById(R.id.toolbar)
+
 
         setSupportActionBar(toolbar)
 
@@ -47,19 +54,18 @@ class MainActivity : AppCompatActivity(),
         toggle.syncState()
 
         navigationView.setNavigationItemSelectedListener(this)
-
         updateDrawerHeader()
 
         if (savedInstanceState == null) {
             loadFragment(HomeFragment(), addToBackStack = false)
-            navigationView.setCheckedItem(R.id.nav_profile)
+            navigationView.setCheckedItem(R.id.nav_home)
         }
 
-        // FAB chatbot button
+        // FAB chatbot
         val fabChatbot = findViewById<FloatingActionButton>(R.id.fabChatbot)
         fabChatbot.setOnClickListener {
             loadFragment(ChatbotFragment())
-            toolbar.title = "eSports Assistant 🤖"
+            toolbar.title = "eSports Assistant"
         }
 
         // Back button handler
@@ -86,27 +92,17 @@ class MainActivity : AppCompatActivity(),
         val switchDark  = headerView.findViewById<SwitchMaterial>(R.id.switchDarkMode)
         val tvThemeIcon = headerView.findViewById<TextView>(R.id.tvThemeIcon)
 
-        // Read saved preference
         val isDark = ThemeManager.isDarkMode(this)
-
-        // Set switch BEFORE listener to avoid triggering it
         switchDark.setOnCheckedChangeListener(null)
         switchDark.isChecked = isDark
         tvThemeIcon.text = if (isDark) "🌙" else "☀️"
 
-        // Now attach listener
         switchDark.setOnCheckedChangeListener { _, isChecked ->
-            // Update icon
             tvThemeIcon.text = if (isChecked) "🌙" else "☀️"
-
-            // Save to SharedPreferences
             ThemeManager.saveTheme(this, isChecked)
-
-            // Apply theme — whole app redraws automatically
             ThemeManager.applyTheme(isChecked)
         }
 
-        // Show user info
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val email    = currentUser.email ?: ""
@@ -120,12 +116,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
-            R.id.nav_home -> {          // NEW
+            R.id.nav_home -> {
                 loadFragment(HomeFragment(), addToBackStack = false)
                 toolbar.title = "AIUB eSports Club"
             }
-
             R.id.nav_profile -> {
                 loadFragment(ProfileFragment())
                 toolbar.title = "My Profile"
