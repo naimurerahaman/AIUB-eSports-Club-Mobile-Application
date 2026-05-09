@@ -67,8 +67,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     // Firebase Cloud Messaging — for push notifications
     implementation("com.google.firebase:firebase-messaging-ktx")
-    // Firebase Storage — for uploading images
-    implementation("com.google.firebase:firebase-storage-ktx")
+
 
     // ===== GEMINI AI =====
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
