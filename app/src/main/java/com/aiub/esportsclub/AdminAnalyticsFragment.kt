@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -19,11 +18,6 @@ import java.util.Locale
 class AdminAnalyticsFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
-
-    // We track how many fetch operations are running
-    // When all finish, we hide the loading spinner
-    // We have 6 operations total
-    private var pendingCount = 6
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,297 +39,181 @@ class AdminAnalyticsFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // Refresh button reloads all statistics from Firebase
         btnRefresh.setOnClickListener {
             loadAllStats(view)
         }
 
-        // Load stats when fragment first opens
         loadAllStats(view)
     }
 
-    // ===== MAIN FUNCTION — loads all stats =====
     private fun loadAllStats(view: View) {
-        val progressBar    = view.findViewById<ProgressBar>(R.id.progressAnalytics)
-        val tvLastUpdated  = view.findViewById<TextView>(R.id.tvLastUpdated)
-
-        // Reset counter for this load
-        pendingCount = 6
+        val progressBar   = view.findViewById<ProgressBar>(R.id.progressAnalytics)
+        val tvLastUpdated = view.findViewById<TextView>(R.id.tvLastUpdated)
+        val layoutGames   = view.findViewById<LinearLayout>(R.id.layoutGameStats)
 
         // Show loading spinner
         progressBar.visibility = View.VISIBLE
 
-        // Show all stat TextViews as loading
-        view.findViewById<TextView>(R.id.tvTotalUsers).text          = "..."
-        view.findViewById<TextView>(R.id.tvTotalRegistrations).text  = "..."
-        view.findViewById<TextView>(R.id.tvTotalEvents).text         = "..."
-        view.findViewById<TextView>(R.id.tvTotalPlayers).text        = "..."
-        view.findViewById<TextView>(R.id.tvTotalUpdates).text        = "..."
-        view.findViewById<TextView>(R.id.tvRegStatus).text           = "..."
+        // Reset all cards to loading state
+        view.findViewById<TextView>(R.id.tvTotalUsers).text         = "..."
+        view.findViewById<TextView>(R.id.tvTotalRegistrations).text = "..."
+        view.findViewById<TextView>(R.id.tvTotalEvents).text        = "..."
+        view.findViewById<TextView>(R.id.tvTotalPlayers).text       = "..."
+        view.findViewById<TextView>(R.id.tvTotalUpdates).text       = "..."
+        view.findViewById<TextView>(R.id.tvRegStatus).text          = "..."
 
-        // ===== FETCH ALL STATS IN PARALLEL =====
-        // Each fetch runs independently — they don't wait for each other
-        // This makes the dashboard load faster
-        fetchUserCount(view, progressBar, tvLastUpdated)
-        fetchRegistrationCount(view, progressBar, tvLastUpdated)
-        fetchEventCount(view, progressBar, tvLastUpdated)
-        fetchPlayerCount(view, progressBar, tvLastUpdated)
-        fetchUpdateCount(view, progressBar, tvLastUpdated)
-        fetchRegistrationStatus(view, progressBar, tvLastUpdated)
-        fetchPopularGames(view)
-    }
+        // We use a simple counter to track completed fetches
+        // Total fetches = 6
+        var completed = 0
+        val total     = 6
 
-    // ===== CALLED AFTER EACH FETCH COMPLETES =====
-    // When ALL fetches finish, hide the spinner and show timestamp
-    private fun onOneFetchComplete(
-        progressBar   : ProgressBar,
-        tvLastUpdated : TextView
-    ) {
-        pendingCount--
-        if (pendingCount <= 0) {
-            // All done — hide spinner
-            progressBar.visibility = View.GONE
-
-            // Show when data was last loaded
-            val time = SimpleDateFormat(
-                "hh:mm a",
-                Locale.getDefault()
-            ).format(Date())
-            tvLastUpdated.text = "Last updated at $time"
-        }
-    }
-
-    // ===== FETCH 1: TOTAL USERS =====
-    // We count documents in the "users" collection
-    // Every time a user registers, we save their info there
-    private fun fetchUserCount(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvUsers = view.findViewById<TextView>(R.id.tvTotalUsers)
-
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                // querySnapshot.size() = number of documents = number of users
-                tvUsers.text = querySnapshot.size().toString()
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-            .addOnFailureListener {
-                // If "users" collection doesn't exist yet, show 0
-                tvUsers.text = "0"
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-    }
-
-    // ===== FETCH 2: TOTAL REGISTRATIONS =====
-    private fun fetchRegistrationCount(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvReg = view.findViewById<TextView>(R.id.tvTotalRegistrations)
-
-        db.collection("registrations")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                tvReg.text = querySnapshot.size().toString()
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-            .addOnFailureListener {
-                tvReg.text = "0"
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-    }
-
-    // ===== FETCH 3: TOTAL EVENTS =====
-    private fun fetchEventCount(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvEvents = view.findViewById<TextView>(R.id.tvTotalEvents)
-
-        db.collection("events")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                tvEvents.text = querySnapshot.size().toString()
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-            .addOnFailureListener {
-                tvEvents.text = "0"
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-    }
-
-    // ===== FETCH 4: TOTAL PLAYERS =====
-    private fun fetchPlayerCount(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvPlayers = view.findViewById<TextView>(R.id.tvTotalPlayers)
-
-        db.collection("players")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                tvPlayers.text = querySnapshot.size().toString()
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-            .addOnFailureListener {
-                tvPlayers.text = "0"
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-    }
-
-    // ===== FETCH 5: TOTAL UPDATES POSTED =====
-    private fun fetchUpdateCount(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvUpdates = view.findViewById<TextView>(R.id.tvTotalUpdates)
-
-        db.collection("updates")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                tvUpdates.text = querySnapshot.size().toString()
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-            .addOnFailureListener {
-                tvUpdates.text = "0"
-                onOneFetchComplete(progressBar, tvLastUpdated)
-            }
-    }
-
-    // ===== FETCH 6: REGISTRATION STATUS =====
-    private fun fetchRegistrationStatus(
-        view         : View,
-        progressBar  : ProgressBar,
-        tvLastUpdated: TextView
-    ) {
-        val tvStatus = view.findViewById<TextView>(R.id.tvRegStatus)
-
-        db.collection("settings")
-            .document("registration")
-            .get()
-            .addOnSuccessListener { document ->
-                val isOpen = document.getBoolean("isOpen") ?: false
-                if (isOpen) {
-                    tvStatus.text      = "OPEN"
-                    tvStatus.setTextColor(Color.parseColor("#2ECC71")) // green
-                } else {
-                    tvStatus.text      = "CLOSED"
-                    tvStatus.setTextColor(Color.parseColor("#E74C3C")) // red
+        // This function is called after EACH fetch finishes
+        // When all 6 are done, hide the spinner
+        fun onDone() {
+            completed++
+            if (completed >= total) {
+                if (isAdded) {
+                    progressBar.visibility = View.GONE
+                    val time = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
+                    tvLastUpdated.text = "Last updated at $time"
                 }
-                onOneFetchComplete(progressBar, tvLastUpdated)
             }
-            .addOnFailureListener {
-                tvStatus.text = "N/A"
-                onOneFetchComplete(progressBar, tvLastUpdated)
+        }
+
+        // ===== FETCH 1: USERS =====
+        db.collection("users").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    view.findViewById<TextView>(R.id.tvTotalUsers).text =
+                        if (task.isSuccessful) task.result?.size().toString() else "0"
+                }
+                onDone()
             }
-    }
 
-    // ===== FETCH POPULAR GAMES =====
-    // This reads all registrations and counts how many times
-    // each game was selected
-    private fun fetchPopularGames(view: View) {
-        val layoutGameStats = view.findViewById<LinearLayout>(R.id.layoutGameStats)
+        // ===== FETCH 2: REGISTRATIONS =====
+        db.collection("registrations").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    view.findViewById<TextView>(R.id.tvTotalRegistrations).text =
+                        if (task.isSuccessful) task.result?.size().toString() else "0"
+                }
+                onDone()
+            }
 
-        db.collection("registrations")
-            .get()
+        // ===== FETCH 3: EVENTS =====
+        db.collection("events").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    view.findViewById<TextView>(R.id.tvTotalEvents).text =
+                        if (task.isSuccessful) task.result?.size().toString() else "0"
+                }
+                onDone()
+            }
+
+        // ===== FETCH 4: APPROVED MEMBERS =====
+        // We fetch ALL member applications then count approved ones locally
+        // This avoids needing a Firestore composite index
+        db.collection("memberApplications").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    var approvedCount = 0
+                    if (task.isSuccessful) {
+                        for (doc in task.result?.documents ?: emptyList()) {
+                            if (doc.getString("status") == "approved") {
+                                approvedCount++
+                            }
+                        }
+                    }
+                    view.findViewById<TextView>(R.id.tvTotalPlayers).text =
+                        approvedCount.toString()
+                }
+                onDone()
+            }
+
+        // ===== FETCH 5: UPDATES =====
+        db.collection("updates").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    view.findViewById<TextView>(R.id.tvTotalUpdates).text =
+                        if (task.isSuccessful) task.result?.size().toString() else "0"
+                }
+                onDone()
+            }
+
+        // ===== FETCH 6: REGISTRATION STATUS =====
+        db.collection("settings").document("registration").get()
+            .addOnCompleteListener { task ->
+                if (isAdded) {
+                    val tvStatus = view.findViewById<TextView>(R.id.tvRegStatus)
+                    val isOpen   = task.result?.getBoolean("isOpen") ?: false
+                    tvStatus.text = if (isOpen) "OPEN" else "CLOSED"
+                    tvStatus.setTextColor(
+                        Color.parseColor(if (isOpen) "#2ECC71" else "#E74C3C")
+                    )
+                }
+                onDone()
+            }
+
+        // ===== FETCH POPULAR GAMES =====
+        // This is separate — does not affect the spinner counter
+        db.collection("registrations").get()
             .addOnSuccessListener { querySnapshot ->
+                if (!isAdded) return@addOnSuccessListener
 
-                // gameCount is a HashMap that tracks how many times each game appears
-                // Key = game name, Value = count
-                // Example: {"Valorant" -> 15, "PUBG" -> 8}
                 val gameCount = mutableMapOf<String, Int>()
-
-                // Loop through every registration document
                 for (document in querySnapshot.documents) {
-
-                    // "games" field is a List — e.g. ["Valorant", "PUBG"]
                     val games = document.get("games") as? List<*>
                     games?.forEach { game ->
-                        val gameName = game.toString()
-                        // If this game is already in the map, add 1
-                        // If not, start with 1
-                        gameCount[gameName] = (gameCount[gameName] ?: 0) + 1
+                        val g = game.toString()
+                        gameCount[g] = (gameCount[g] ?: 0) + 1
                     }
                 }
 
-                // Sort by count — highest first
-                // sortedByDescending returns a sorted list
-                val sortedGames = gameCount.entries
-                    .sortedByDescending { it.value }
+                val sorted = gameCount.entries.sortedByDescending { it.value }
+                layoutGames.removeAllViews()
 
-                // Clear previous game rows
-                layoutGameStats.removeAllViews()
-
-                if (sortedGames.isEmpty()) {
-                    // No registrations yet
-                    val tvEmpty = TextView(requireContext())
-                    tvEmpty.text      = "No registration data yet"
-                    tvEmpty.textSize  = 13f
-                    tvEmpty.setTextColor(Color.parseColor("#AAAAAA"))
-                    layoutGameStats.addView(tvEmpty)
+                if (sorted.isEmpty()) {
+                    val tv = TextView(requireContext())
+                    tv.text      = "No registration data yet"
+                    tv.textSize  = 13f
+                    tv.setTextColor(Color.parseColor("#AAAAAA"))
+                    layoutGames.addView(tv)
                     return@addOnSuccessListener
                 }
 
-                // Find the highest count for percentage calculation
-                val maxCount = sortedGames.first().value
-
-                // Create a row for each game
-                sortedGames.forEach { (gameName, count) ->
-                    addGameStatRow(layoutGameStats, gameName, count, maxCount)
+                val maxCount = sorted.first().value
+                sorted.forEach { (gameName, count) ->
+                    addGameRow(layoutGames, gameName, count, maxCount)
                 }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(
-                    requireContext(),
-                    "Error loading game stats: ${exception.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
     }
 
-    // ===== ADD ONE GAME ROW TO THE CHART =====
-    private fun addGameStatRow(
+    private fun addGameRow(
         layout   : LinearLayout,
         gameName : String,
         count    : Int,
         maxCount : Int
     ) {
-        // Create outer container for this game row
         val rowLayout = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
-            val params = LinearLayout.LayoutParams(
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.bottomMargin = 10
-            layoutParams = params
+            ).also { it.bottomMargin = 10 }
         }
 
-        // Game name + count label row
         val labelRow = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.HORIZONTAL
         }
 
-        // Game name text
         val tvName = TextView(requireContext()).apply {
-            text     = gameName
-            textSize = 13f
+            text      = gameName
+            textSize  = 13f
             setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f  // takes remaining space
-            )
+            layoutParams = LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
 
-        // Count text
         val tvCount = TextView(requireContext()).apply {
             text     = "$count players"
             textSize = 12f
@@ -345,24 +223,17 @@ class AdminAnalyticsFragment : Fragment() {
         labelRow.addView(tvName)
         labelRow.addView(tvCount)
 
-        // ===== PROGRESS BAR (visual bar) =====
-        // This creates a simple colored bar showing relative popularity
         val progressBar = android.widget.ProgressBar(
-            requireContext(),
-            null,
+            requireContext(), null,
             android.R.attr.progressBarStyleHorizontal
         ).apply {
-            max     = maxCount       // maximum value = highest count
-            progress = count         // current value = this game's count
-            progressTintList = android.content.res.ColorStateList.valueOf(
-                Color.parseColor("#E94560") // accent color
-            )
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                16  // height in pixels
-            )
-            params.topMargin = 4
-            layoutParams = params
+            max      = maxCount
+            progress = count
+            progressTintList = android.content.res.ColorStateList
+                .valueOf(Color.parseColor("#E94560"))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 16
+            ).also { it.topMargin = 4 }
         }
 
         rowLayout.addView(labelRow)
