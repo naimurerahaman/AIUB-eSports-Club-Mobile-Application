@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- We use a simple LinearLayout with orientation vertical -->
+<!-- This is the most reliable structure for chat screens -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -12,10 +14,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/card_bg"
-        android:padding="16dp"
+        android:padding="12dp"
         android:gravity="center_vertical">
 
-        <!-- Close/Back button -->
+        <!-- Close Button -->
         <Button
             android:id="@+id/btnCloseChatbot"
             android:layout_width="wrap_content"
@@ -25,7 +27,7 @@
             android:backgroundTint="@color/accent"
             android:layout_marginEnd="12dp"/>
 
-        <!-- Bot avatar -->
+        <!-- Bot Avatar -->
         <TextView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -35,6 +37,7 @@
             android:background="@color/accent_blue"
             android:layout_marginEnd="10dp"/>
 
+        <!-- Bot Name and Status -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,7 +52,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
 
-            <!-- Online indicator -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,26 +64,33 @@
     </LinearLayout>
 
     <!-- ===== CHAT MESSAGES LIST ===== -->
-    <!-- layout_weight="1" makes this take all available space -->
-    <!-- leaving room for the input bar at the bottom -->
+    <!-- layout_weight="1" is the KEY fix -->
+    <!-- It means: take ALL remaining space between header and input bar -->
+    <!-- When keyboard opens, this RecyclerView SHRINKS to give space -->
+    <!-- The input bar stays pinned at the bottom above the keyboard -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="8dp"
-        android:clipToPadding="false"/>
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"/>
 
-    <!-- ===== INPUT BAR at bottom ===== -->
+    <!-- ===== INPUT BAR — ALWAYS AT BOTTOM ===== -->
+    <!-- This stays pinned above the keyboard because it has no weight -->
+    <!-- Only the RecyclerView above it shrinks when keyboard appears -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/card_bg"
         android:padding="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:elevation="8dp">
 
-        <!-- Text input where user types their message -->
+        <!-- Text Input -->
         <EditText
             android:id="@+id/etChatInput"
             android:layout_width="0dp"
@@ -97,7 +106,7 @@
             android:maxLines="1"
             android:layout_marginEnd="8dp"/>
 
-        <!-- Send button -->
+        <!-- Send Button -->
         <Button
             android:id="@+id/btnSendMessage"
             android:layout_width="48dp"

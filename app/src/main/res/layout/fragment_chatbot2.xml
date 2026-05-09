@@ -1,14 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- We use a simple LinearLayout with orientation vertical -->
+<!-- This is the most reliable structure for chat screens -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatbotFragment">
+    android:orientation="vertical"
+    android:background="@color/dark_bg">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- ===== HEADER ===== -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/card_bg"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-</FrameLayout>
+        <!-- Close Button -->
+        <Button
+            android:id="@+id/btnCloseChatbot"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="✕"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Bot Avatar -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="🤖"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="@color/accent_blue"
+            android:layout_marginEnd="10dp"/>
+
+        <!-- Bot Name and Status -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="eSports Assistant"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Online"
+                android:textSize="11sp"
+                android:textColor="#2ECC71"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- ===== CHAT MESSAGES LIST ===== -->
+    <!-- layout_weight="1" is the KEY fix -->
+    <!-- It means: take ALL remaining space between header and input bar -->
+    <!-- When keyboard opens, this RecyclerView SHRINKS to give space -->
+    <!-- The input bar stays pinned at the bottom above the keyboard -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"/>
+
+    <!-- ===== INPUT BAR — ALWAYS AT BOTTOM ===== -->
+    <!-- This stays pinned above the keyboard because it has no weight -->
+    <!-- Only the RecyclerView above it shrinks when keyboard appears -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/card_bg"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:elevation="8dp">
+
+        <!-- Text Input -->
+        <EditText
+            android:id="@+id/etChatInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Ask me anything..."
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/dark_bg"
+            android:padding="12dp"
+            android:inputType="text"
+            android:imeOptions="actionSend"
+            android:maxLines="1"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Send Button -->
+        <Button
+            android:id="@+id/btnSendMessage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="➤"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent"
+            android:padding="0dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

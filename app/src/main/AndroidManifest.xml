@@ -38,7 +38,10 @@
         <activity android:name=".AdminLoginActivity"     android:exported="false" />
 
         <!-- ===== FRAGMENT HOST ACTIVITIES ===== -->
-        <activity android:name=".MainActivity"  android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".AdminActivity" android:exported="false" />
 
         <!-- ===== FIREBASE MESSAGING SERVICE ===== -->

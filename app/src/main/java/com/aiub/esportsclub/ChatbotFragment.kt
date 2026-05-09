@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -16,18 +17,12 @@ import kotlinx.coroutines.launch
 
 class ChatbotFragment : Fragment() {
 
-    private val messageList    = mutableListOf<ChatMessage>()
+    private val messageList           = mutableListOf<ChatMessage>()
     private lateinit var adapter      : ChatAdapter
     private lateinit var recyclerView : RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
 
-    // Create one instance of GeminiChatService
-    // "lazy" means it is only created the first time it is used
-    // not immediately when the Fragment is created
-    private val geminiService by lazy { GeminiChatService() }
-
-    // Track if the bot is currently waiting for a response
-    // We use this to prevent the user from sending multiple messages
-    // while waiting for a reply
+    private val geminiService    by lazy { GeminiChatService() }
     private var isWaitingForReply = false
 
     override fun onCreateView(
@@ -47,26 +42,40 @@ class ChatbotFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewChat)
 
         // ===== SET UP RECYCLERVIEW =====
-        val layoutManager = LinearLayoutManager(requireContext())
-        layoutManager.stackFromEnd = true
+        layoutManager = LinearLayoutManager(requireContext()).apply {
+            stackFromEnd = true
+        }
         recyclerView.layoutManager = layoutManager
         adapter = ChatAdapter(messageList)
         recyclerView.adapter = adapter
 
-        // ===== WELCOME MESSAGE =====
-        addBotMessage("👋 Hi! I'm your AI-powered AIUB eSports Club assistant!\n\nI can answer any question about the app, events, registration, and the club. What would you like to know?")
+        // ===== AUTO SCROLL WHEN KEYBOARD OPENS =====
+        recyclerView.addOnLayoutChangeListener {
+                _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom && adapter.itemCount > 0) {
+                recyclerView.postDelayed({
+                    recyclerView.smoothScrollToPosition(
+                        adapter.itemCount - 1
+                    )
+                }, 100)
+            }
+        }
 
-        // ===== CLOSE BUTTON =====
+        // ===== WELCOME MESSAGE =====
+        addBotMessage(
+            "👋 Hi! I'm your AI-powered AIUB eSports Club assistant!\n\n" +
+                    "Ask me anything about the app, events, registration, and the club."
+        )
+
+        // ===== BUTTONS =====
         btnClose.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // ===== SEND BUTTON =====
         btnSend.setOnClickListener {
             sendMessage(etInput, btnSend)
         }
 
-        // ===== KEYBOARD SEND =====
         etInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 sendMessage(etInput, btnSend)
@@ -75,65 +84,32 @@ class ChatbotFragment : Fragment() {
         }
     }
 
-    // ===== MAIN SEND FUNCTION =====
     private fun sendMessage(etInput: EditText, btnSend: Button) {
-        // TEMPORARY DEBUG — shows what the API key value actually is
-        // We will remove this after fixing
-//        android.util.Log.d("GEMINI_DEBUG", "API Key = '${BuildConfig.GEMINI_API_KEY}'")
-//        android.widget.Toast.makeText(
-//            requireContext(),
-//            "Key starts with: ${BuildConfig.GEMINI_API_KEY.take(10)}",
-//            android.widget.Toast.LENGTH_LONG
-//        ).show()
-        // Don't send if already waiting for a reply
         if (isWaitingForReply) {
-            Toast.makeText(requireContext(), "Please wait for a response...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please wait...", Toast.LENGTH_SHORT).show()
             return
         }
 
         val userText = etInput.text.toString().trim()
         if (userText.isEmpty()) return
 
-        // 1. Show user message on screen
         addUserMessage(userText)
-
-        // 2. Clear input field
         etInput.text.clear()
 
-        // 3. Disable send button while waiting
         isWaitingForReply = true
         btnSend.isEnabled = false
 
-        // 4. Show typing indicator and remember its position
         val typingPosition = adapter.showTyping()
         scrollToBottom()
 
-        // ===== CALL GEMINI API =====
-        // lifecycleScope.launch runs code in the background
-        // "launch" = start a background task
-        // The code inside {} runs without freezing the UI
-        // This is called a "Coroutine"
-        //
-        // Think of it like ordering pizza:
-        // You place the order (launch)
-        // You do other things while waiting (UI stays responsive)
-        // Pizza arrives (geminiService.sendMessage returns)
-        // You eat it (show the response)
         lifecycleScope.launch {
-            // geminiService.sendMessage() sends the text to Google's AI servers
-            // "await" the response — the coroutine pauses here
-            // but the UI thread stays responsive
             val botReply = geminiService.sendMessage(userText)
-
-            // Back on the main thread — update the UI
-            // Remove typing indicator
             adapter.removeTyping(typingPosition)
 
-            // Show the actual reply
-            if (isAdded) { // Make sure fragment is still attached
+            if (isAdded) {
                 addBotMessage(botReply)
-                btnSend.isEnabled  = true
-                isWaitingForReply  = false
+                btnSend.isEnabled = true
+                isWaitingForReply = false
             }
         }
     }
@@ -150,19 +126,31 @@ class ChatbotFragment : Fragment() {
 
     private fun scrollToBottom() {
         if (adapter.itemCount > 0) {
-            recyclerView.scrollToPosition(adapter.itemCount - 1)
+            recyclerView.post {
+                recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+            }
         }
     }
 
-    // Hide FAB when chat is open
+    // ===== APPLY adjustResize WHEN CHAT OPENS =====
     override fun onResume() {
         super.onResume()
         (requireActivity() as MainActivity).setChatbotFabVisible(false)
+
+        // Force adjustResize for this fragment specifically
+        requireActivity().window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
     }
 
-    // Show FAB again when chat is closed
+    // ===== RESTORE WHEN CHAT CLOSES =====
     override fun onDestroyView() {
         super.onDestroyView()
         (requireActivity() as MainActivity).setChatbotFabVisible(true)
+
+        // Restore normal mode for other fragments
+        requireActivity().window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
     }
 }

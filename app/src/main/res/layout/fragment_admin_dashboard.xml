@@ -23,12 +23,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="🛡️ Admin Dashboard"
+                android:text="Admin Dashboard"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
 
-            <!-- Logout button top right -->
             <Button
                 android:id="@+id/btnAdminLogout"
                 android:layout_width="wrap_content"
@@ -46,41 +45,103 @@
             android:text="AIUB eSports Club Management"
             android:textSize="13sp"
             android:textColor="@color/light_gray"
-            android:layout_marginBottom="28dp"/>
+            android:layout_marginBottom="24dp"/>
 
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/accent"
-            android:layout_marginBottom="28dp"/>
-        <!-- ===== UPDATES SECTION ===== -->
+            android:layout_marginBottom="24dp"/>
+
+        <!-- ===== REGISTRATION CONTROL ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REGISTRATION CONTROL"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Status Card with Switch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="@color/card_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Loading spinner -->
+            <ProgressBar
+                android:id="@+id/progressRegStatus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="visible"/>
+
+            <!-- Status text -->
+            <TextView
+                android:id="@+id/tvRegStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Checking status..."
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+            <!-- Toggle Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchRegOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toggle ON to open registration. Toggle OFF to close it."
+            android:textSize="11sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/card_bg"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- ===== UPDATES MANAGEMENT ===== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📢  UPDATES MANAGEMENT"
+            android:text="UPDATES MANAGEMENT"
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Create New Update Button -->
         <Button
             android:id="@+id/btnCreateUpdate"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="➕  Create New Update / Post"
+            android:text="+ Create New Update / Post"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Manage Updates Button -->
         <Button
             android:id="@+id/btnManageUpdates"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="⚙️  Manage Updates (Edit / Delete)"
+            android:text="Manage Updates (Edit / Delete)"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent_blue"
@@ -91,35 +152,33 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/card_bg"
-            android:layout_marginBottom="28dp"/>
+            android:layout_marginBottom="24dp"/>
 
-        <!-- ===== EVENTS SECTION ===== -->
+        <!-- ===== EVENT MANAGEMENT ===== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📅  EVENT MANAGEMENT"
+            android:text="EVENT MANAGEMENT"
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Add Event -->
         <Button
             android:id="@+id/btnAddEvent"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="➕  Add New Event"
+            android:text="+ Add New Event"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Manage Events (View, Edit, Delete) -->
         <Button
             android:id="@+id/btnManageEvents"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="⚙️  Manage Events (Edit / Delete)"
+            android:text="Manage Events (Edit / Delete)"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent_blue"
@@ -130,35 +189,33 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/card_bg"
-            android:layout_marginBottom="28dp"/>
+            android:layout_marginBottom="24dp"/>
 
-        <!-- ===== PLAYERS SECTION ===== -->
+        <!-- ===== PLAYER MANAGEMENT ===== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="👥  PLAYER MANAGEMENT"
+            android:text="PLAYER MANAGEMENT"
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Add Player -->
         <Button
             android:id="@+id/btnAddPlayer"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="➕  Add New Player"
+            android:text="+ Add New Player"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Manage Players -->
         <Button
             android:id="@+id/btnManagePlayers"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="⚙️  Manage Players (Edit / Delete)"
+            android:text="Manage Players (Edit / Delete)"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/accent_blue"

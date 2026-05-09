@@ -7,43 +7,39 @@
     android:layout_height="match_parent">
 
     <!-- ===== MAIN CONTENT ===== -->
-    <!-- CoordinatorLayout allows the FAB to float over everything -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <!-- Using FrameLayout instead of CoordinatorLayout -->
+    <!-- CoordinatorLayout can interfere with adjustResize in Fragments -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_bg">
 
-        <!-- Toolbar + Fragment container -->
-        <LinearLayout
+        <!-- Toolbar at top -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/card_bg"
+            android:elevation="4dp"
+            android:layout_alignParentTop="true"
+            app:title="AIUB eSports Club"
+            app:titleTextColor="@color/white"
+            app:navigationIconTint="@color/white"/>
+
+        <!-- Fragment Container fills space below toolbar -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_below="@id/toolbar"/>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorSurface"
-                android:elevation="4dp"
-                app:title="AIUB eSports Club"
-                app:titleTextColor="?attr/colorOnSurface"
-                app:navigationIconTint="?attr/colorOnSurface"/>
-
-            <FrameLayout
-                android:id="@+id/fragmentContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
-        <!-- ===== FLOATING CHAT BUTTON ===== -->
-        <!-- FloatingActionButton floats above everything else -->
-        <!-- layout_gravity="bottom|end" = bottom-right corner -->
+        <!-- FAB sits on top of everything -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChatbot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_margin="20dp"
             android:src="@android:drawable/ic_dialog_info"
             android:contentDescription="Open Chatbot"
@@ -52,7 +48,7 @@
             app:fabSize="normal"
             app:elevation="8dp"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
 
     <!-- ===== NAVIGATION DRAWER ===== -->
     <com.google.android.material.navigation.NavigationView
@@ -60,10 +56,10 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/colorSurface"
+        android:background="@color/card_bg"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemTextColor="?attr/colorOnSurface"
-        app:itemIconTint="@color/accent_main"/>
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/accent"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
