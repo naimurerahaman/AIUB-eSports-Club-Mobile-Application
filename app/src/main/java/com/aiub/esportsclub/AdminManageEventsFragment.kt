@@ -41,18 +41,17 @@ class AdminManageEventsFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Pass callback — when Edit is clicked, navigate to AdminEditEventFragment
         adapter = AdminEventAdapter(requireContext(), eventList) { event ->
             val editFragment = AdminEditEventFragment()
 
-            // Pass event data via Bundle (like Intent extras but for fragments)
             val bundle = Bundle()
-            bundle.putString("documentId",  event.documentId)
-            bundle.putString("name",        event.name)
-            bundle.putString("game",        event.game)
-            bundle.putString("date",        event.date)
-            bundle.putString("prize",       event.prize)
-            bundle.putString("description", event.description)
+            bundle.putString("documentId",    event.documentId)
+            bundle.putString("name",          event.name)
+            bundle.putString("game",          event.game)
+            bundle.putString("date",          event.date)
+            bundle.putString("prize",         event.prize)
+            bundle.putString("description",   event.description)
+            bundle.putString("bannerImageUrl", event.bannerImageUrl) // ← ADDED
 
             editFragment.arguments = bundle
             (requireActivity() as AdminActivity).loadFragment(editFragment)
@@ -61,8 +60,6 @@ class AdminManageEventsFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    // onResume runs every time this fragment becomes visible again
-    // e.g. after coming back from AdminEditEventFragment
     override fun onResume() {
         super.onResume()
         eventList.clear()
@@ -91,12 +88,13 @@ class AdminManageEventsFragment : Fragment() {
 
                 for (document in querySnapshot.documents) {
                     eventList.add(AdminEvent(
-                        documentId  = document.id,
-                        name        = document.getString("name")        ?: "",
-                        game        = document.getString("game")        ?: "",
-                        date        = document.getString("date")        ?: "",
-                        prize       = document.getString("prize")       ?: "",
-                        description = document.getString("description") ?: ""
+                        documentId     = document.id,
+                        name           = document.getString("name")           ?: "",
+                        game           = document.getString("game")           ?: "",
+                        date           = document.getString("date")           ?: "",
+                        prize          = document.getString("prize")          ?: "",
+                        description    = document.getString("description")    ?: "",
+                        bannerImageUrl = document.getString("bannerImageUrl") ?: "" // ← ADDED
                     ))
                 }
 

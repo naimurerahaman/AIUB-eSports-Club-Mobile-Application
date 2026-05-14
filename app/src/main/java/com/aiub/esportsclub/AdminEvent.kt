@@ -6,5 +6,6 @@ data class AdminEvent(
     val game: String = "",
     val date: String = "",
     val prize: String = "",
-    val description: String = ""
+    val description: String = "",
+    val bannerImageUrl: String = ""
 )

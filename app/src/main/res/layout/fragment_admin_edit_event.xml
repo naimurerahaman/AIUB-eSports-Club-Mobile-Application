@@ -119,6 +119,47 @@
             android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_marginBottom="28dp"/>
+        <!-- Banner Image URL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Banner Image URL (Optional)"
+            android:textSize="13sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEditBannerUrl"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="https://raw.githubusercontent.com/..."
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:background="@color/card_bg"
+            android:padding="14dp"
+            android:inputType="textUri"
+            android:layout_marginBottom="14dp"/>
+
+        <!-- Preview Button -->
+        <Button
+            android:id="@+id/btnPreviewEditBanner"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Preview Image"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Image Preview -->
+        <ImageView
+            android:id="@+id/ivEditBannerPreview"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:layout_marginBottom="14dp"
+            android:contentDescription="Banner preview"/>
 
         <Button
             android:id="@+id/btnUpdateEvent"

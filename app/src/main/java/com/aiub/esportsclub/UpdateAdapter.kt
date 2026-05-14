@@ -26,7 +26,7 @@ class UpdateAdapter(
         val tvDescription: TextView  = itemView.findViewById(R.id.tvUpdateDescription)
         val tvDate       : TextView  = itemView.findViewById(R.id.tvUpdateDate)
         val ivImage      : ImageView = itemView.findViewById(R.id.ivUpdateImage)
-        val btnLink      : Button    = itemView.findViewById(R.id.btnUpdateLink) // NEW
+        val btnLink      : Button    = itemView.findViewById(R.id.btnUpdateLink)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpdateViewHolder {
@@ -54,9 +54,10 @@ class UpdateAdapter(
             holder.tvDate.text = "🕐 Just now"
         }
 
-        // Handle image
+        // ===== HANDLE IMAGE =====
         if (update.imageUrl.isNotEmpty()) {
             holder.ivImage.visibility = View.VISIBLE
+
             Glide.with(context)
                 .load(update.imageUrl)
                 .placeholder(android.R.color.darker_gray)
@@ -67,29 +68,22 @@ class UpdateAdapter(
             holder.ivImage.visibility = View.GONE
         }
 
-        // ===== NEW: HANDLE LINK BUTTON =====
+        // ===== HANDLE LINK BUTTON =====
         if (update.link.isNotEmpty()) {
-            // Show the button only if a link was provided
             holder.btnLink.visibility = View.VISIBLE
 
             holder.btnLink.setOnClickListener {
                 try {
-                    // Create a URL from the link string
                     var url = update.link
 
-                    // Make sure the URL starts with http:// or https://
-                    // Without this, the browser won't know it's a web link
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "https://$url"
                     }
 
-                    // Intent.ACTION_VIEW opens the URL in the default browser
-                    // Uri.parse() converts the string to a proper URL object
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     context.startActivity(intent)
 
                 } catch (e: Exception) {
-                    // If URL is invalid or no browser installed
                     Toast.makeText(
                         context,
                         "Could not open link. Please check the URL.",
@@ -98,7 +92,6 @@ class UpdateAdapter(
                 }
             }
         } else {
-            // No link provided — hide the button
             holder.btnLink.visibility = View.GONE
         }
     }

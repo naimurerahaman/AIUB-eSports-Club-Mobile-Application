@@ -6,50 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- MAIN CONTENT -->
-    <LinearLayout
+    <!-- ===== MAIN CONTENT (child 1 of DrawerLayout) ===== -->
+    <!-- Using FrameLayout so FAB can float over the fragment -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/dark_bg"
         android:fitsSystemWindows="true">
 
-        <!-- Toolbar — sits naturally below status bar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <!-- Main vertical layout: Toolbar + Fragment container -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/card_bg"
-            android:elevation="4dp"
-            app:title="AIUB eSports Club"
-            app:titleTextColor="@color/white"
-            app:navigationIconTint="@color/white"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <!-- Fragment Container -->
-        <FrameLayout
-            android:id="@+id/fragmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/card_bg"
+                android:elevation="4dp"
+                app:title="AIUB eSports Club"
+                app:titleTextColor="@color/white"
+                app:navigationIconTint="@color/white"/>
 
-    </LinearLayout>
+            <!-- Fragment Container -->
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-    <!-- FAB overlaid on top -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabChatbot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="36dp"
-        android:src="@android:drawable/ic_dialog_info"
-        android:contentDescription="Open Chatbot"
-        app:backgroundTint="@color/accent"
-        app:tint="@color/white"
-        app:fabSize="normal"
-        app:elevation="8dp"/>
+        </LinearLayout>
 
-    <!-- NAVIGATION DRAWER -->
+        <!-- FAB sits INSIDE the FrameLayout so it floats over the fragment -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabChatbot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/ic_dialog_info"
+            android:contentDescription="Open Chatbot"
+            app:backgroundTint="@color/accent"
+            app:tint="@color/white"
+            app:fabSize="normal"
+            app:elevation="8dp"/>
+
+    </FrameLayout>
+
+    <!-- ===== NAVIGATION DRAWER (child 2 of DrawerLayout) ===== -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="280dp"
